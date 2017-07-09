@@ -5,6 +5,6 @@ package com.asmat.rolando.bakingapp.models
  */
 data class Ingredient (
         val quantity: Int = 0,
-        val measure: Int = Measure.UNIT,
+        val measure: String = "UNIT",
         val ingredientName: String = ""
 )

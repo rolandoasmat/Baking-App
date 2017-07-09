@@ -1,7 +1,8 @@
-package com.asmat.rolando.bakingapp
+package com.asmat.rolando.bakingapp.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.asmat.rolando.bakingapp.R
 
 class MainActivity : AppCompatActivity() {
 
