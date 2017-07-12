@@ -1,5 +1,6 @@
 package com.asmat.rolando.bakingapp.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.ListFragment
 import android.view.LayoutInflater
@@ -7,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.Toast
 import com.asmat.rolando.bakingapp.R
 import com.asmat.rolando.bakingapp.RecipesApiManager
 import com.asmat.rolando.bakingapp.adapters.RecipesAdapter
@@ -18,6 +18,7 @@ import com.asmat.rolando.bakingapp.models.Recipe
  */
 
 class RecipesListFragment: ListFragment(), OnItemClickListener {
+    var callback: OnRecipeClickListener? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (inflater != null) {
@@ -34,9 +35,23 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
         fetchRecipes()
     }
 
-    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        Toast.makeText(activity, "Item: " + position, Toast.LENGTH_SHORT).show()
+    // Make sure host Activity implements interface
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if(context is OnRecipeClickListener) {
+            callback = context
+        } else {
+            throw ClassCastException("Activity does not implement OnRecipeClickListener")
+        }
     }
+
+    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        if(callback != null) {
+            val recipe = (listAdapter as RecipesAdapter).getItem(position)
+            callback!!.onRecipeSelected(recipe)
+        }
+    }
+
     private fun fetchRecipes() {
         RecipesApiManager.fetchRecipes(activity){ recipes ->
             val recipesAdapter = listAdapter as RecipesAdapter
@@ -50,6 +65,10 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
                 recipesAdapter.clear()
             }
         }
+    }
+
+    interface OnRecipeClickListener {
+        fun onRecipeSelected(recipe: Recipe)
     }
 
 }
