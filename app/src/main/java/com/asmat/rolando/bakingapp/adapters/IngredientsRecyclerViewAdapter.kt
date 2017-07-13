@@ -1,4 +1,4 @@
-package com.asmat.rolando.bakingapp.fragments
+package com.asmat.rolando.bakingapp.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,15 +10,9 @@ import com.asmat.rolando.bakingapp.R
 import com.asmat.rolando.bakingapp.fragments.IngredientsFragment.OnListFragmentInteractionListener
 import com.asmat.rolando.bakingapp.models.Ingredient
 
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
- * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
- */
 class IngredientsRecyclerViewAdapter(private val mValues: List<Ingredient>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<IngredientsRecyclerViewAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         return mValues.size
     }
 
@@ -29,8 +23,10 @@ class IngredientsRecyclerViewAdapter(private val mValues: List<Ingredient>, priv
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.mItem = mValues[position]
-        holder.checkedTextView.text = mValues[position].ingredientName
+        val item = mValues[position]
+        holder.mItem = item
+        val entry = item.quantity.toString() + " " + item.measure + " of " + item.ingredientName
+        holder.checkedTextView.text = entry
 
         holder.mView.setOnClickListener {
             mListener?.onListFragmentInteraction(holder.mItem!!)
@@ -44,6 +40,5 @@ class IngredientsRecyclerViewAdapter(private val mValues: List<Ingredient>, priv
         init {
             checkedTextView = mView.findViewById(R.id.checked_text_view_ingredient) as CheckedTextView
         }
-
     }
 }

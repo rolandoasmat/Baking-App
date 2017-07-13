@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.asmat.rolando.bakingapp.R
+import com.asmat.rolando.bakingapp.adapters.IngredientsRecyclerViewAdapter
 import com.asmat.rolando.bakingapp.models.Ingredient
 
 /**
