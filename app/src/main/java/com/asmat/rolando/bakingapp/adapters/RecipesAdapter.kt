@@ -21,7 +21,7 @@ class RecipesAdapter(context: Context?, resource: Int, objects: ArrayList<out Re
         var convertView = convertView
         val recipe = getItem(position)
         if(convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.recipe_list_item, parent, false)
+            convertView = LayoutInflater.from(context).inflate(R.layout.fragment_recipes_list_item, parent, false)
         }
         val imageView = convertView?.findViewById(R.id.recipe_image_view) as ImageView
         val textView = convertView?.findViewById(R.id.recipe_name_text_view) as TextView

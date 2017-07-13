@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.asmat.rolando.bakingapp.R
-import com.asmat.rolando.bakingapp.adapters.IngredientsRecyclerViewAdapter
+import com.asmat.rolando.bakingapp.adapters.IngredientsAdapter
 import com.asmat.rolando.bakingapp.models.Ingredient
 
 /**
@@ -38,7 +38,7 @@ class IngredientsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_ingredients_list, container, false)
+        val view = inflater!!.inflate(R.layout.fragment_ingredients, container, false)
 
         // Set the adapter
         val context = view.getContext()
@@ -48,7 +48,7 @@ class IngredientsFragment : Fragment() {
         for(ingredient in mItems!!) {
             list.add(ingredient)
         }
-        recyclerView.setAdapter(IngredientsRecyclerViewAdapter(list, mListener))
+        recyclerView.setAdapter(IngredientsAdapter(list, mListener))
         return view
     }
 

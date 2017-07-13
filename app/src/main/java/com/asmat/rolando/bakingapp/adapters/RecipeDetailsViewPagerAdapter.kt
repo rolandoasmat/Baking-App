@@ -12,7 +12,7 @@ import com.asmat.rolando.bakingapp.models.Recipe
  */
 
 
-class RecipeDetailsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class RecipeDetailsViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     var recipe: Recipe? = null
 
     override fun getCount(): Int {

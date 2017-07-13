@@ -3,7 +3,6 @@ package com.asmat.rolando.bakingapp.activities
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.asmat.rolando.bakingapp.R
 import com.asmat.rolando.bakingapp.fragments.RecipesListFragment
 import com.asmat.rolando.bakingapp.models.Recipe
@@ -19,7 +18,7 @@ class MainActivity : AppCompatActivity(), RecipesListFragment.OnRecipeClickListe
     }
 
     override fun onRecipeSelected(recipe: Recipe) {
-        val intent = Intent(this, RecipeDetails::class.java)
+        val intent = Intent(this, RecipeDetailsActivity::class.java)
         intent.putExtra(ARG_RECIPE, recipe)
         startActivity(intent)
     }

@@ -22,7 +22,7 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (inflater != null) {
-            return inflater.inflate(R.layout.recipes_list_fragment, container, false)
+            return inflater.inflate(R.layout.fragment_recipes, container, false)
         } else {
             return null
         }
@@ -30,7 +30,7 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        listAdapter = RecipesAdapter(activity, R.layout.recipe_list_item, ArrayList<Recipe>())
+        listAdapter = RecipesAdapter(activity, R.layout.fragment_recipes_list_item, ArrayList<Recipe>())
         listView.onItemClickListener = this
         fetchRecipes()
     }

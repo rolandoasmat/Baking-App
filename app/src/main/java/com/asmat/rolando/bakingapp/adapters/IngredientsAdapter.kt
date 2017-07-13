@@ -10,7 +10,7 @@ import com.asmat.rolando.bakingapp.R
 import com.asmat.rolando.bakingapp.fragments.IngredientsFragment.OnListFragmentInteractionListener
 import com.asmat.rolando.bakingapp.models.Ingredient
 
-class IngredientsRecyclerViewAdapter(private val mValues: List<Ingredient>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<IngredientsRecyclerViewAdapter.ViewHolder>() {
+class IngredientsAdapter(private val mValues: List<Ingredient>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return mValues.size
@@ -18,7 +18,7 @@ class IngredientsRecyclerViewAdapter(private val mValues: List<Ingredient>, priv
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.fragment_ingredient, parent, false)
+                .inflate(R.layout.fragment_ingredients_list_item, parent, false)
         return ViewHolder(view)
     }
 
