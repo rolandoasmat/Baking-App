@@ -7,12 +7,17 @@ import android.view.MenuItem
 import com.asmat.rolando.bakingapp.R
 import com.asmat.rolando.bakingapp.adapters.RecipeDetailsViewPagerAdapter
 import com.asmat.rolando.bakingapp.fragments.IngredientsFragment
+import com.asmat.rolando.bakingapp.fragments.StepsFragment
 import com.asmat.rolando.bakingapp.models.Ingredient
 import com.asmat.rolando.bakingapp.models.Recipe
+import com.asmat.rolando.bakingapp.models.Step
 
-class RecipeDetailsActivity : AppCompatActivity(), IngredientsFragment.OnListFragmentInteractionListener {
+class RecipeDetailsActivity : AppCompatActivity(), IngredientsFragment.OnListFragmentInteractionListener, StepsFragment.OnListFragmentInteractionListener {
+    override fun onListFragmentInteraction(item: Step) {
+        print(item)
+    }
+
     override fun onListFragmentInteraction(item: Ingredient) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         print(item)
     }
 

@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.asmat.rolando.bakingapp.fragments.IngredientsFragment
+import com.asmat.rolando.bakingapp.fragments.StepsFragment
 import com.asmat.rolando.bakingapp.models.Recipe
 
 
@@ -20,6 +21,11 @@ class RecipeDetailsViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(
     }
 
     override fun getItem(position: Int): Fragment {
-        return IngredientsFragment.newInstance(recipe!!.ingredients)
+        when (position) {
+            0 -> return IngredientsFragment.newInstance(recipe!!.ingredients)
+            1 -> return StepsFragment.newInstance(recipe!!.steps)
+            else -> throw RuntimeException("View pager should only be of size 2!")
+        }
+
     }
 }
