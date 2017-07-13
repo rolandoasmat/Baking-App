@@ -18,7 +18,8 @@ import com.asmat.rolando.bakingapp.models.Ingredient
 class IngredientsRecyclerViewAdapter(private val mValues: List<Ingredient>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<IngredientsRecyclerViewAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return mValues.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

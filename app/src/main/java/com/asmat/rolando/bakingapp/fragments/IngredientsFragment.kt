@@ -3,7 +3,6 @@ package com.asmat.rolando.bakingapp.fragments
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -41,16 +40,14 @@ class IngredientsFragment : Fragment() {
         val view = inflater!!.inflate(R.layout.fragment_ingredients_list, container, false)
 
         // Set the adapter
-        if (view is RecyclerView) {
-            val context = view.getContext()
-            val recyclerView = view as RecyclerView
-            recyclerView.setLayoutManager(LinearLayoutManager(context))
-            val list = ArrayList<Ingredient>()
-            for(ingredient in mItems!!) {
-                list.add(ingredient)
-            }
-            recyclerView.setAdapter(IngredientsRecyclerViewAdapter(list, mListener))
+        val context = view.getContext()
+        val recyclerView = view.findViewById(R.id.list) as RecyclerView
+        recyclerView.setLayoutManager(LinearLayoutManager(context))
+        val list = ArrayList<Ingredient>()
+        for(ingredient in mItems!!) {
+            list.add(ingredient)
         }
+        recyclerView.setAdapter(IngredientsRecyclerViewAdapter(list, mListener))
         return view
     }
 
