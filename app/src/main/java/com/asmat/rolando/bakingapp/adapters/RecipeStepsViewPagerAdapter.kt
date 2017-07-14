@@ -27,6 +27,11 @@ class RecipeStepsViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm
     }
 
     override fun getPageTitle(position: Int): CharSequence {
-        return (position + 1).toString()
+        val id =  recipe!!.steps[position].id
+        if(id == 0) {
+            return "Intro"
+        } else {
+            return id.toString()
+        }
     }
 }

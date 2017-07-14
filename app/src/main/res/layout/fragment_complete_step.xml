@@ -6,11 +6,11 @@
     android:orientation="horizontal">
 
     <TextView
+        android:id="@+id/complete_step_description_text_view"
+        android:padding="8dp"
         android:layout_width="0dp"
         android:layout_weight="2"
-        android:background="@color/colorAccent"
-        android:layout_height="match_parent"
-        android:text="FULL STEP DESCRIPTION" />
+        android:layout_height="match_parent" />
 
     <TextView
         android:layout_width="0dp"

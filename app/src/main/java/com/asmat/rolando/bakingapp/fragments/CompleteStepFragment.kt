@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 
 import com.asmat.rolando.bakingapp.R
 import com.asmat.rolando.bakingapp.models.Recipe
@@ -25,7 +26,12 @@ class CompleteStepFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.fragment_complete_step, container, false)
+        val stepDescription = mRecipe!!.steps[mPosition!!].description
+
+        val view = inflater!!.inflate(R.layout.fragment_complete_step, container, false)
+        val descriptionTextView = view.findViewById(R.id.complete_step_description_text_view) as TextView
+        descriptionTextView.text = stepDescription
+        return view
     }
 
     override fun onDetach() {
