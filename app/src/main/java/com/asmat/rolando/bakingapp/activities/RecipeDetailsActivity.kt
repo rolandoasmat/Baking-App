@@ -2,6 +2,7 @@ package com.asmat.rolando.bakingapp.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.view.MenuItem
 import com.asmat.rolando.bakingapp.R
@@ -26,12 +27,17 @@ class RecipeDetailsActivity : AppCompatActivity(), IngredientsFragment.OnListFra
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_details)
+        val tablayout = findViewById(R.id.tab_layout) as TabLayout
+        tablayout.addTab(tablayout.newTab().setText("Ingredients"))
+        tablayout.addTab(tablayout.newTab().setText("Steps"))
+
         val recipe = intent.getParcelableExtra<Recipe>(MainActivity.ARG_RECIPE)
         supportActionBar?.title = recipe.name
         val adapter = RecipeDetailsViewPagerAdapter(supportFragmentManager)
         adapter.recipe = recipe
         mPager = findViewById(R.id.container) as ViewPager
         mPager?.setAdapter(adapter)
+        tablayout.setupWithViewPager(mPager)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

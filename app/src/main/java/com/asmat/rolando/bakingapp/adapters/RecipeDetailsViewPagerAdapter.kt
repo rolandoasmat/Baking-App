@@ -26,6 +26,13 @@ class RecipeDetailsViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(
             1 -> return StepsFragment.newInstance(recipe!!.steps)
             else -> throw RuntimeException("View pager should only be of size 2!")
         }
+    }
 
+    override fun getPageTitle(position: Int): CharSequence {
+        when (position) {
+            0 -> return "Ingredients"
+            1 -> return "Steps"
+            else -> throw RuntimeException("View pager should only be of size 2!")
+        }
     }
 }
