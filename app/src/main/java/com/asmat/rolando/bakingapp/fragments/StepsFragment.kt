@@ -16,24 +16,11 @@ import com.asmat.rolando.bakingapp.models.Step
  * Created by rolandoasmat on 7/12/17.
  */
 
-/**
- * A fragment representing a list of Items.
- *
- *
- * Activities containing this fragment MUST implement the [OnListFragmentInteractionListener]
- * interface.
- */
-/**
- * Mandatory empty constructor for the fragment manager to instantiate the
- * fragment (e.g. upon screen orientation changes).
- */
 class StepsFragment : Fragment() {
     private var mItems: Array<Step>? = null
-    private var mListener: OnListFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         if (arguments != null) {
             mItems = arguments.getParcelableArray(ARG_STEPS) as Array<Step>
         }
@@ -43,48 +30,30 @@ class StepsFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_steps, container, false)
 
-        // Set the adapter
-        val context = view.getContext()
+        val context = view.context
         val recyclerView = view.findViewById(R.id.list) as RecyclerView
-        recyclerView.setLayoutManager(LinearLayoutManager(context))
+        recyclerView.layoutManager = LinearLayoutManager(context)
         val list = ArrayList<Step>()
         for(step in mItems!!) {
             list.add(step)
         }
-        recyclerView.setAdapter(StepsAdapter(list, mListener))
+        recyclerView.adapter = StepsAdapter(list)
         return view
     }
 
-
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if (context is OnListFragmentInteractionListener) {
-            mListener = context as OnListFragmentInteractionListener?
-        } else {
-            throw RuntimeException(context!!.toString() + " must implement OnListFragmentInteractionListener")
+        if (context !is OnStepsFragmentInteractionListener) {
+            throw RuntimeException(context!!.toString() + " must implement OnStepsFragmentInteractionListener")
         }
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        mListener = null
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
-     */
-    interface OnListFragmentInteractionListener {
-        fun onListFragmentInteraction(item: Step)
+    interface OnStepsFragmentInteractionListener {
+        fun onBeginRecipe(view:View)
     }
 
     companion object {
-        private val ARG_STEPS= "arg-steps"
+        private val ARG_STEPS= "arg_steps"
 
         fun newInstance(steps: Array<Step>): StepsFragment {
             val fragment = StepsFragment()
