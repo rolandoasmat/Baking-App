@@ -83,17 +83,19 @@ class CompleteStepFragment : Fragment(), ExoPlayer.EventListener {
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
         when (playbackState) {
             ExoPlayer.STATE_BUFFERING ->
-                //You can use progress dialog to show user that video is preparing or buffering so please wait
-                print("")
+                print("STATE_BUFFERING")
             ExoPlayer.STATE_IDLE ->
-                //idle state
-                print("")
-            ExoPlayer.STATE_READY ->
-                // dismiss your dialog here because our video is ready to play now
-                print("")
+                print("STATE_IDLE")
+            ExoPlayer.STATE_READY -> {
+                if(playWhenReady) {
+                    // We are playing
+                } else {
+                    // We are paused
+
+                }
+            }
             ExoPlayer.STATE_ENDED ->
-                // do your processing after ending of video
-                print("")
+                print("STATE_ENDED")
         }
     }
 
