@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.asmat.rolando.bakingapp.activities.MainActivity">
+
+    <fragment
+        android:id="@+id/recipes_list_fragment"
+        android:name="com.asmat.rolando.bakingapp.fragments.RecipesListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</FrameLayout>
