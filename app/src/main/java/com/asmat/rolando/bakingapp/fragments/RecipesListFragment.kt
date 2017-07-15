@@ -11,6 +11,7 @@ import android.widget.AdapterView.OnItemClickListener
 import com.asmat.rolando.bakingapp.R
 import com.asmat.rolando.bakingapp.RecipesApiManager
 import com.asmat.rolando.bakingapp.Utils.ArrayUtils
+import com.asmat.rolando.bakingapp.activities.MainActivity
 import com.asmat.rolando.bakingapp.adapters.RecipesAdapter
 import com.asmat.rolando.bakingapp.models.Recipe
 
@@ -54,7 +55,12 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
             if(recipes != null) {
                 val arrayList = ArrayUtils.toArrayList(recipes)
                 recipesAdapter.addAll(arrayList)
-                callback?.onRecipeSelected(arrayList[0])
+                if(context is MainActivity) {
+                    val main = context as MainActivity
+                    if(main.mIsDualPane) {
+                        callback?.onRecipeSelected(arrayList[0])
+                    }
+                }
             } else {
                 recipesAdapter.clear()
             }
