@@ -54,6 +54,7 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
             if(recipes != null) {
                 val arrayList = ArrayUtils.toArrayList(recipes)
                 recipesAdapter.addAll(arrayList)
+                callback?.onRecipeSelected(arrayList[0])
             } else {
                 recipesAdapter.clear()
             }
