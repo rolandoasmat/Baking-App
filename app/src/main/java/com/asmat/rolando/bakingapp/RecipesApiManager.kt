@@ -51,7 +51,7 @@ class RecipesApiManager {
         }
 
         fun mapJsonToIngredientObject(json: JSONObject): Ingredient {
-            val quantity = json.getInt("quantity")
+            val quantity = json.getDouble("quantity")
             val measure = json.getString("measure")
             val ingredient = json.getString("ingredient")
             return Ingredient(quantity, measure, ingredient)

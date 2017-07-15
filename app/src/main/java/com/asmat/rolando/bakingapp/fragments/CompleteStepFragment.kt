@@ -2,7 +2,6 @@ package com.asmat.rolando.bakingapp.fragments
 
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,10 +18,7 @@ import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import android.content.DialogInterface
-import android.opengl.Visibility
-import android.support.v7.app.AlertDialog
-import android.util.Log
+import android.text.method.ScrollingMovementMethod
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.source.TrackGroupArray
@@ -46,6 +42,7 @@ class CompleteStepFragment : Fragment(), ExoPlayer.EventListener {
         val view = inflater!!.inflate(R.layout.fragment_complete_step, container, false)
 
         val descriptionTextView = view.findViewById(R.id.complete_step_description_text_view) as TextView
+        descriptionTextView.movementMethod = ScrollingMovementMethod()
         val stepDescription = mRecipe!!.steps[mPosition!!].description
         descriptionTextView.text = stepDescription
 
@@ -67,7 +64,6 @@ class CompleteStepFragment : Fragment(), ExoPlayer.EventListener {
             player?.addListener(this)
             player?.prepare(videoSource)
             simpleExoPlayerView?.requestFocus()
-            player?.playWhenReady = true
         }
         return view
     }

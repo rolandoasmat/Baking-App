@@ -24,21 +24,15 @@ class IngredientsAdapter(private val mValues: List<Ingredient>, private val mLis
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
-        holder.mItem = item
-        val entry = item.quantity.toString() + " " + item.measure + " of " + item.ingredientName
+        val entry = item.quantity.toString().replace(".0", "") + " " + item.measure + " of " + item.ingredientName
         holder.checkedTextView.text = entry
 
         holder.mView.setOnClickListener {
-            mListener?.onListFragmentInteraction(holder.mItem!!)
+            mListener?.onListFragmentInteraction(item)
         }
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val checkedTextView: CheckedTextView
-        var mItem: Ingredient? = null
-
-        init {
-            checkedTextView = mView.findViewById(R.id.checked_text_view_ingredient) as CheckedTextView
-        }
+        val checkedTextView: CheckedTextView = mView.findViewById(R.id.checked_text_view_ingredient) as CheckedTextView
     }
 }

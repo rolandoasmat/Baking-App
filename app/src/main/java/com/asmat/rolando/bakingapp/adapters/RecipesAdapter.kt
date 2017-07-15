@@ -18,20 +18,14 @@ import com.squareup.picasso.Picasso
 class RecipesAdapter(context: Context?, resource: Int, objects: ArrayList<out Recipe>?) : ArrayAdapter<Recipe>(context, resource, objects) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        var convertView = convertView
+        val mutableConvertView = convertView ?: LayoutInflater.from(context).inflate(R.layout.fragment_recipes_list_item, parent, false)
         val recipe = getItem(position)
-        if(convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.fragment_recipes_list_item, parent, false)
-        }
-        val imageView = convertView?.findViewById(R.id.recipe_image_view) as ImageView
-        val textView = convertView?.findViewById(R.id.recipe_name_text_view) as TextView
-
-        if(recipe.image != "") {
+        val imageView = mutableConvertView.findViewById(R.id.recipe_image_view) as ImageView
+        val textView = mutableConvertView.findViewById(R.id.recipe_name_text_view) as TextView
+        if(!recipe.image.equals("")) {
             Picasso.with(context).load(recipe.image).into(imageView)
         }
         textView.text = recipe.name
-
-        return convertView!!
+        return mutableConvertView
     }
-
 }

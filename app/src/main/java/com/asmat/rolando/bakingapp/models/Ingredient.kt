@@ -8,25 +8,25 @@ import android.os.Parcelable
  */
 
 class Ingredient: Parcelable {
-    val quantity: Int
+    val quantity: Double
     val measure: String
     val ingredientName: String
 
-    constructor(quantity: Int, measure: String, ingredientName: String) {
+    constructor(quantity: Double, measure: String, ingredientName: String) {
         this.quantity = quantity
         this.measure = measure
         this.ingredientName = ingredientName
     }
 
     constructor(source: Parcel) {
-        this.quantity = source.readInt()
+        this.quantity = source.readDouble()
         this.measure = source.readString()
         this.ingredientName = source.readString()
     }
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
         if(dest != null) {
-            dest.writeInt(quantity)
+            dest.writeDouble(quantity)
             dest.writeString(measure)
             dest.writeString(ingredientName)
         }

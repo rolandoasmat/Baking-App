@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import com.asmat.rolando.bakingapp.R
 import com.asmat.rolando.bakingapp.RecipesApiManager
+import com.asmat.rolando.bakingapp.Utils.ArrayUtils
 import com.asmat.rolando.bakingapp.adapters.RecipesAdapter
 import com.asmat.rolando.bakingapp.models.Recipe
 
@@ -21,11 +22,7 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
     var callback: OnRecipeClickListener? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        if (inflater != null) {
-            return inflater.inflate(R.layout.fragment_recipes, container, false)
-        } else {
-            return null
-        }
+        return inflater?.inflate(R.layout.fragment_recipes, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -35,7 +32,6 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
         fetchRecipes()
     }
 
-    // Make sure host Activity implements interface
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         if(context is OnRecipeClickListener) {
@@ -48,7 +44,7 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if(callback != null) {
             val recipe = (listAdapter as RecipesAdapter).getItem(position)
-            callback!!.onRecipeSelected(recipe)
+            callback?.onRecipeSelected(recipe)
         }
     }
 
@@ -56,10 +52,7 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
         RecipesApiManager.fetchRecipes(activity){ recipes ->
             val recipesAdapter = listAdapter as RecipesAdapter
             if(recipes != null) {
-                val arrayList = ArrayList<Recipe>()
-                for(recipe in recipes){
-                    arrayList.add(recipe)
-                }
+                val arrayList = ArrayUtils.toArrayList(recipes)
                 recipesAdapter.addAll(arrayList)
             } else {
                 recipesAdapter.clear()
@@ -70,5 +63,4 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
     interface OnRecipeClickListener {
         fun onRecipeSelected(recipe: Recipe)
     }
-
 }

@@ -10,20 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.asmat.rolando.bakingapp.R
+import com.asmat.rolando.bakingapp.Utils.ArrayUtils
 import com.asmat.rolando.bakingapp.adapters.IngredientsAdapter
 import com.asmat.rolando.bakingapp.models.Ingredient
 
-/**
- * A fragment representing a list of Items.
- *
- *
- * Activities containing this fragment MUST implement the [OnListFragmentInteractionListener]
- * interface.
- */
-/**
- * Mandatory empty constructor for the fragment manager to instantiate the
- * fragment (e.g. upon screen orientation changes).
- */
 class IngredientsFragment : Fragment() {
     private var mItems: Array<Ingredient>? = null
     private var mListener: OnListFragmentInteractionListener? = null
@@ -41,22 +31,18 @@ class IngredientsFragment : Fragment() {
         val view = inflater!!.inflate(R.layout.fragment_ingredients, container, false)
 
         // Set the adapter
-        val context = view.getContext()
+        val context = view.context
         val recyclerView = view.findViewById(R.id.list) as RecyclerView
-        recyclerView.setLayoutManager(LinearLayoutManager(context))
-        val list = ArrayList<Ingredient>()
-        for(ingredient in mItems!!) {
-            list.add(ingredient)
-        }
-        recyclerView.setAdapter(IngredientsAdapter(list, mListener))
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        val list = ArrayUtils.toArrayList(mItems!!)
+        recyclerView.adapter = IngredientsAdapter(list, mListener)
         return view
     }
-
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         if (context is OnListFragmentInteractionListener) {
-            mListener = context as OnListFragmentInteractionListener?
+            mListener = context
         } else {
             throw RuntimeException(context!!.toString() + " must implement OnListFragmentInteractionListener")
         }
@@ -67,15 +53,6 @@ class IngredientsFragment : Fragment() {
         mListener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
-     */
     interface OnListFragmentInteractionListener {
         fun onListFragmentInteraction(item: Ingredient)
     }
