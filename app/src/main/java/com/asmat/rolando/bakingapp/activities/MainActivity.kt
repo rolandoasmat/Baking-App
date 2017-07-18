@@ -15,7 +15,7 @@ import com.asmat.rolando.bakingapp.models.Ingredient
 import com.asmat.rolando.bakingapp.models.Recipe
 
 class MainActivity : AppCompatActivity(), RecipesListFragment.OnRecipeClickListener,
-        IngredientsFragment.OnListFragmentInteractionListener, StepsFragment.OnStepsFragmentInteractionListener {
+        IngredientsFragment.OnIngredientsFragmentInteractionListener, StepsFragment.OnStepsFragmentInteractionListener {
     var mIsDualPane = false
     var mTabLayout: TabLayout? = null
     var mViewPager: ViewPager? = null
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity(), RecipesListFragment.OnRecipeClickListe
         mViewPager?.adapter?.notifyDataSetChanged()
     }
 
-    override fun onListFragmentInteraction(item: Ingredient) {
+    override fun onIngredientTapped(item: Ingredient) {
         print(item)
     }
 
@@ -66,5 +66,9 @@ class MainActivity : AppCompatActivity(), RecipesListFragment.OnRecipeClickListe
         val intent = Intent(this, RecipeStepsActivity::class.java)
         intent.putExtra(MainActivity.ARG_RECIPE, mSelectedRecipe!!)
         startActivity(intent)
+    }
+
+    override fun onAddGroceries(view: View) {
+        print(view)
     }
 }

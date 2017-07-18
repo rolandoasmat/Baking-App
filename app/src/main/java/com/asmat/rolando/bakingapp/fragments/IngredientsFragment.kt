@@ -16,7 +16,7 @@ import com.asmat.rolando.bakingapp.models.Ingredient
 
 class IngredientsFragment : Fragment() {
     private var mItems: Array<Ingredient>? = null
-    private var mListener: OnListFragmentInteractionListener? = null
+    private var mListener: OnIngredientsFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +41,7 @@ class IngredientsFragment : Fragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if (context is OnListFragmentInteractionListener) {
+        if (context is OnIngredientsFragmentInteractionListener) {
             mListener = context
         } else {
             throw RuntimeException(context!!.toString() + " must implement OnListFragmentInteractionListener")
@@ -53,8 +53,9 @@ class IngredientsFragment : Fragment() {
         mListener = null
     }
 
-    interface OnListFragmentInteractionListener {
-        fun onListFragmentInteraction(item: Ingredient)
+    interface OnIngredientsFragmentInteractionListener {
+        fun onIngredientTapped(item: Ingredient)
+        fun onAddGroceries(view: View)
     }
 
     companion object {

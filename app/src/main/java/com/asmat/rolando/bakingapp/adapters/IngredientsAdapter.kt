@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.CheckedTextView
 import com.asmat.rolando.bakingapp.R
 
-import com.asmat.rolando.bakingapp.fragments.IngredientsFragment.OnListFragmentInteractionListener
+import com.asmat.rolando.bakingapp.fragments.IngredientsFragment.OnIngredientsFragmentInteractionListener
 import com.asmat.rolando.bakingapp.models.Ingredient
 
-class IngredientsAdapter(private val mValues: List<Ingredient>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
+class IngredientsAdapter(private val mValues: List<Ingredient>, private val mListener: OnIngredientsFragmentInteractionListener?) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return mValues.size
@@ -28,7 +28,7 @@ class IngredientsAdapter(private val mValues: List<Ingredient>, private val mLis
         holder.checkedTextView.text = entry
 
         holder.mView.setOnClickListener {
-            mListener?.onListFragmentInteraction(item)
+            mListener?.onIngredientTapped(item)
         }
     }
 

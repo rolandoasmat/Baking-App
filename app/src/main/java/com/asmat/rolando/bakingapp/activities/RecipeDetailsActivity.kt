@@ -13,9 +13,12 @@ import com.asmat.rolando.bakingapp.fragments.IngredientsFragment
 import com.asmat.rolando.bakingapp.fragments.StepsFragment
 import com.asmat.rolando.bakingapp.models.Ingredient
 import com.asmat.rolando.bakingapp.models.Recipe
+import com.asmat.rolando.bakingapp.db.AppDatabase
+import com.asmat.rolando.bakingapp.db.IngredientDB
+import android.os.AsyncTask
 
 class RecipeDetailsActivity : AppCompatActivity(),
-        IngredientsFragment.OnListFragmentInteractionListener,
+        IngredientsFragment.OnIngredientsFragmentInteractionListener,
         StepsFragment.OnStepsFragmentInteractionListener {
     var mRecipe: Recipe? = null
 
@@ -31,6 +34,7 @@ class RecipeDetailsActivity : AppCompatActivity(),
         val viewPager = findViewById(R.id.container) as ViewPager
         viewPager.adapter = viewPagerAdapter
         tabLayout.setupWithViewPager(viewPager)
+        fetchSelectedIngredients()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -43,15 +47,44 @@ class RecipeDetailsActivity : AppCompatActivity(),
         return super.onOptionsItemSelected(item)
     }
 
+    fun fetchSelectedIngredients() {
+        val db = AppDatabase.getInstance(baseContext)
+        object : AsyncTask<Void, Void, List<IngredientDB>>() {
+            override fun doInBackground(vararg params: Void): List<IngredientDB> {
+                return db!!.getAllIngredients()
+            }
+
+            override fun onPostExecute(result: List<IngredientDB>?) {
+                for(ingredient in result!!) {
+                    print(ingredient.ingredient)
+                }
+            }
+        }.execute()
+    }
+
     // Fragment Callbacks
+    var selectedIngredients = ArrayList<IngredientDB>()
+    override fun onIngredientTapped(item: Ingredient) {
+        val entry = item.quantity.toString().replace(".0", "")+" "+item.measure+" "+" of "+item.ingredientName
+        val ingredientDB = IngredientDB(entry)
+        selectedIngredients.add(ingredientDB)
+    }
+
+    override fun onAddGroceries(view: View) {
+        val db = AppDatabase.getInstance(baseContext)
+        for(ingredient in selectedIngredients) {
+            object : AsyncTask<Void, Void, Int>() {
+                override fun doInBackground(vararg params: Void): Int {
+                    db?.insert(ingredient)
+                    return 0
+                }
+            }.execute()
+        }
+    }
 
     override fun onBeginRecipe(view: View) {
         val intent = Intent(this, RecipeStepsActivity::class.java)
         intent.putExtra(MainActivity.ARG_RECIPE, mRecipe)
         startActivity(intent)
-    }
-
-    override fun onListFragmentInteraction(item: Ingredient) {
-        print(item)
     }
 }
