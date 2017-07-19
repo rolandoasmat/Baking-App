@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.view.View
 import com.asmat.rolando.bakingapp.R
+import com.asmat.rolando.bakingapp.adapters.IngredientsAdapter
 import com.asmat.rolando.bakingapp.adapters.RecipeDetailsViewPagerAdapter
 import com.asmat.rolando.bakingapp.fragments.IngredientsFragment
 import com.asmat.rolando.bakingapp.fragments.RecipesListFragment
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity(), RecipesListFragment.OnRecipeClickListe
         mViewPager?.adapter?.notifyDataSetChanged()
     }
 
-    override fun onIngredientTapped(item: Ingredient) {
+    override fun onIngredientTapped(item: IngredientsAdapter.ViewHolder) {
         print(item)
     }
 

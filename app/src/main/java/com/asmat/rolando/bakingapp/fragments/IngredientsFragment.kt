@@ -1,6 +1,7 @@
 package com.asmat.rolando.bakingapp.fragments
 
 import android.content.Context
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -8,15 +9,19 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckedTextView
 
 import com.asmat.rolando.bakingapp.R
 import com.asmat.rolando.bakingapp.Utils.ArrayUtils
 import com.asmat.rolando.bakingapp.adapters.IngredientsAdapter
+import com.asmat.rolando.bakingapp.db.AppDatabase
+import com.asmat.rolando.bakingapp.db.IngredientDB
 import com.asmat.rolando.bakingapp.models.Ingredient
 
 class IngredientsFragment : Fragment() {
     private var mItems: Array<Ingredient>? = null
     private var mListener: OnIngredientsFragmentInteractionListener? = null
+    var mRecyclerView: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,10 +37,11 @@ class IngredientsFragment : Fragment() {
 
         // Set the adapter
         val context = view.context
-        val recyclerView = view.findViewById(R.id.list) as RecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        mRecyclerView = view.findViewById(R.id.list) as RecyclerView
+        mRecyclerView?.layoutManager = LinearLayoutManager(context)
         val list = ArrayUtils.toArrayList(mItems!!)
-        recyclerView.adapter = IngredientsAdapter(list, mListener)
+        mRecyclerView?.adapter = IngredientsAdapter(list, mListener)
+        fetchIngredientsFromDB()
         return view
     }
 
@@ -48,13 +54,31 @@ class IngredientsFragment : Fragment() {
         }
     }
 
+    // TODO use this fetch and check text views somewhere else?
+    fun fetchIngredientsFromDB() {
+        val db = AppDatabase.getInstance(context)
+        object : AsyncTask<Void, Void, List<IngredientDB>>() {
+            override fun doInBackground(vararg params: Void): List<IngredientDB> {
+                if(db == null) { return ArrayList() }
+                return db.getAllIngredients()
+            }
+
+            override fun onPostExecute(result: List<IngredientDB>) {
+                for(ingredient in result) {
+                    (mRecyclerView?.adapter as IngredientsAdapter).shouldCheck.add(ingredient)
+                    (mRecyclerView?.adapter as IngredientsAdapter).notifyDataSetChanged()
+                }
+            }
+        }.execute()
+    }
+
     override fun onDetach() {
         super.onDetach()
         mListener = null
     }
 
     interface OnIngredientsFragmentInteractionListener {
-        fun onIngredientTapped(item: Ingredient)
+        fun onIngredientTapped(item: IngredientsAdapter.ViewHolder)
         fun onAddGroceries(view: View)
     }
 

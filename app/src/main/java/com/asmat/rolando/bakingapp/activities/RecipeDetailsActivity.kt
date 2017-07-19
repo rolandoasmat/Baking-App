@@ -11,16 +11,18 @@ import com.asmat.rolando.bakingapp.R
 import com.asmat.rolando.bakingapp.adapters.RecipeDetailsViewPagerAdapter
 import com.asmat.rolando.bakingapp.fragments.IngredientsFragment
 import com.asmat.rolando.bakingapp.fragments.StepsFragment
-import com.asmat.rolando.bakingapp.models.Ingredient
 import com.asmat.rolando.bakingapp.models.Recipe
 import com.asmat.rolando.bakingapp.db.AppDatabase
 import com.asmat.rolando.bakingapp.db.IngredientDB
 import android.os.AsyncTask
+import com.asmat.rolando.bakingapp.adapters.IngredientsAdapter
 
 class RecipeDetailsActivity : AppCompatActivity(),
         IngredientsFragment.OnIngredientsFragmentInteractionListener,
         StepsFragment.OnStepsFragmentInteractionListener {
     var mRecipe: Recipe? = null
+    var selectedIngredients = ArrayList<IngredientDB>()
+    var mViewPagerAdapter: RecipeDetailsViewPagerAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,12 +31,11 @@ class RecipeDetailsActivity : AppCompatActivity(),
         val tabLayout = findViewById(R.id.tab_layout) as TabLayout
         mRecipe = intent.getParcelableExtra<Recipe>(MainActivity.ARG_RECIPE)
         supportActionBar?.title = mRecipe?.name
-        val viewPagerAdapter = RecipeDetailsViewPagerAdapter(supportFragmentManager)
-        viewPagerAdapter.recipe = mRecipe
+        mViewPagerAdapter = RecipeDetailsViewPagerAdapter(supportFragmentManager)
+        mViewPagerAdapter!!.recipe = mRecipe
         val viewPager = findViewById(R.id.container) as ViewPager
-        viewPager.adapter = viewPagerAdapter
+        viewPager.adapter = mViewPagerAdapter
         tabLayout.setupWithViewPager(viewPager)
-        fetchSelectedIngredients()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -47,39 +48,28 @@ class RecipeDetailsActivity : AppCompatActivity(),
         return super.onOptionsItemSelected(item)
     }
 
-    fun fetchSelectedIngredients() {
-        val db = AppDatabase.getInstance(baseContext)
-        object : AsyncTask<Void, Void, List<IngredientDB>>() {
-            override fun doInBackground(vararg params: Void): List<IngredientDB> {
-                return db!!.getAllIngredients()
-            }
-
-            override fun onPostExecute(result: List<IngredientDB>?) {
-                for(ingredient in result!!) {
-                    print(ingredient.ingredient)
-                }
-            }
-        }.execute()
-    }
-
     // Fragment Callbacks
-    var selectedIngredients = ArrayList<IngredientDB>()
-    override fun onIngredientTapped(item: Ingredient) {
-        val entry = item.quantity.toString().replace(".0", "")+" "+item.measure+" "+" of "+item.ingredientName
-        val ingredientDB = IngredientDB(entry)
-        selectedIngredients.add(ingredientDB)
-    }
-
-    override fun onAddGroceries(view: View) {
-        val db = AppDatabase.getInstance(baseContext)
-        for(ingredient in selectedIngredients) {
+    override fun onIngredientTapped(item: IngredientsAdapter.ViewHolder) {
+        if(item.checkedTextView.isEnabled){
+            // Item was not checked, so: insert to DB and disable it
+            val ingredient = item.ingredient!!
+            val entry = ingredient.quantity.toString().replace(".0", "") + " " + ingredient.measure + " of " + ingredient.ingredientName
+            val ingredientDB = IngredientDB(entry)
+            val db = AppDatabase.getInstance(baseContext)
             object : AsyncTask<Void, Void, Int>() {
                 override fun doInBackground(vararg params: Void): Int {
-                    db?.insert(ingredient)
+                    db?.insert(ingredientDB)
                     return 0
                 }
             }.execute()
+            IngredientsAdapter.markAsChecked(item.checkedTextView)
+        } else {
+            // Item was checked, so: remove from DB enable it
         }
+    }
+
+    override fun onAddGroceries(view: View) {
+        print(view)
     }
 
     override fun onBeginRecipe(view: View) {
