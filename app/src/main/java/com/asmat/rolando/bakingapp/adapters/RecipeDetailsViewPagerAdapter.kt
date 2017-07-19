@@ -25,7 +25,7 @@ class RecipeDetailsViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAda
 
     override fun getItem(position: Int): Fragment {
         when (position) {
-            0 -> return IngredientsFragment.newInstance(recipe!!.ingredients)
+            0 -> return IngredientsFragment.newInstance(recipe!!)
             1 -> return StepsFragment.newInstance(recipe!!.steps)
             else -> throw RuntimeException("View pager should only be of size 2!")
         }

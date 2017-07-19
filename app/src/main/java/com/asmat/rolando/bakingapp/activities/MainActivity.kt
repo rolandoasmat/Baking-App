@@ -68,8 +68,4 @@ class MainActivity : AppCompatActivity(), RecipesListFragment.OnRecipeClickListe
         intent.putExtra(MainActivity.ARG_RECIPE, mSelectedRecipe!!)
         startActivity(intent)
     }
-
-    override fun onAddGroceries(view: View) {
-        print(view)
-    }
 }

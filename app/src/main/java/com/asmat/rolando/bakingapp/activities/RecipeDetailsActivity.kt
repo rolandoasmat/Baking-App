@@ -21,7 +21,6 @@ class RecipeDetailsActivity : AppCompatActivity(),
         IngredientsFragment.OnIngredientsFragmentInteractionListener,
         StepsFragment.OnStepsFragmentInteractionListener {
     var mRecipe: Recipe? = null
-    var selectedIngredients = ArrayList<IngredientDB>()
     var mViewPagerAdapter: RecipeDetailsViewPagerAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,25 +51,13 @@ class RecipeDetailsActivity : AppCompatActivity(),
     override fun onIngredientTapped(item: IngredientsAdapter.ViewHolder) {
         if(item.checkedTextView.isEnabled){
             // Item was not checked, so: insert to DB and disable it
-            val ingredient = item.ingredient!!
-            val entry = ingredient.quantity.toString().replace(".0", "") + " " + ingredient.measure + " of " + ingredient.ingredientName
-            val ingredientDB = IngredientDB(entry)
-            val db = AppDatabase.getInstance(baseContext)
-            object : AsyncTask<Void, Void, Int>() {
-                override fun doInBackground(vararg params: Void): Int {
-                    db?.insert(ingredientDB)
-                    return 0
-                }
-            }.execute()
-            IngredientsAdapter.markAsChecked(item.checkedTextView)
+            IngredientsAdapter.markAsChecked(item)
+            IngredientsAdapter.addToDatabase(item, mRecipe!!,this)
         } else {
             // Item was checked, so: remove from DB enable it
-            IngredientsAdapter.markAsUnChecked(item.checkedTextView, this)
+            IngredientsAdapter.markAsUnChecked(item.checkedTextView)
+            IngredientsAdapter.removeFromDatabase(item.checkedTextView, mRecipe!!, this)
         }
-    }
-
-    override fun onAddGroceries(view: View) {
-        print(view)
     }
 
     override fun onBeginRecipe(view: View) {

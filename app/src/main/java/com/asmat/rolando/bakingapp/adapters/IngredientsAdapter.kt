@@ -14,12 +14,14 @@ import com.asmat.rolando.bakingapp.db.IngredientDB
 
 import com.asmat.rolando.bakingapp.fragments.IngredientsFragment.OnIngredientsFragmentInteractionListener
 import com.asmat.rolando.bakingapp.models.Ingredient
+import com.asmat.rolando.bakingapp.models.Recipe
 
-class IngredientsAdapter(private val mValues: List<Ingredient>, private val mListener: OnIngredientsFragmentInteractionListener?) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
-    var mContext: Context? = null
+class IngredientsAdapter(private val mRecipe: Recipe,
+                         private val mContext: Context,
+                         private val mListener: OnIngredientsFragmentInteractionListener?) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
-        return mValues.size
+        return mRecipe.ingredients.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,10 +31,10 @@ class IngredientsAdapter(private val mValues: List<Ingredient>, private val mLis
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = mValues[position]
+        val item = mRecipe.ingredients[position]
         holder.ingredient = item
-        val entry = item.quantity.toString().replace(".0", "") + " " + item.measure + " of " + item.ingredientName
-        holder.checkedTextView.text = entry
+        holder.recipe = mRecipe
+        holder.checkedTextView.text = item.createListEntry()
         holder.mView.setOnClickListener {
             mListener?.onIngredientTapped(holder)
         }
@@ -40,7 +42,7 @@ class IngredientsAdapter(private val mValues: List<Ingredient>, private val mLis
     }
 
     fun checkIngredientsFromDB(holder: ViewHolder) {
-        val db = AppDatabase.getInstance(mContext!!)
+        val db = AppDatabase.getInstance(mContext)
         object : AsyncTask<Void, Void, List<IngredientDB>>() {
             override fun doInBackground(vararg params: Void): List<IngredientDB> {
                 if(db == null) { return ArrayList() }
@@ -49,8 +51,9 @@ class IngredientsAdapter(private val mValues: List<Ingredient>, private val mLis
 
             override fun onPostExecute(result: List<IngredientDB>) {
                 for(ingredient in result) {
-                    if(ingredient.ingredient == holder.checkedTextView.text) {
-                        markAsChecked(holder.checkedTextView)
+                    if(ingredient.ingredient == mRecipe.name + holder.checkedTextView.text) {
+                        markAsChecked(holder)
+                        return
                     }
                 }
             }
@@ -58,26 +61,44 @@ class IngredientsAdapter(private val mValues: List<Ingredient>, private val mLis
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+        var recipe: Recipe? = null
         var ingredient: Ingredient? = null
         val checkedTextView: CheckedTextView = mView.findViewById(R.id.checked_text_view_ingredient) as CheckedTextView
     }
 
     companion object {
-        fun markAsChecked(checkedTextView: CheckedTextView) {
+        fun markAsChecked(viewHolder: IngredientsAdapter.ViewHolder) {
+            val checkedTextView = viewHolder.checkedTextView
             checkedTextView.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
             checkedTextView.isEnabled = false
             checkedTextView.setCheckMarkDrawable(R.drawable.check_24dp)
         }
 
-        fun markAsUnChecked(checkedTextView: CheckedTextView, context: Context) {
+        fun addToDatabase(viewHolder: IngredientsAdapter.ViewHolder, recipe: Recipe, context: Context) {
+            val ingredient = viewHolder.ingredient!!
+            val entry = recipe.name + ingredient.createListEntry()
+            val ingredientDB = IngredientDB(entry)
+            val db = AppDatabase.getInstance(context)
+            object : AsyncTask<Void, Void, Int>() {
+                override fun doInBackground(vararg params: Void): Int {
+                    db?.insert(ingredientDB)
+                    return 0
+                }
+            }.execute()
+        }
+
+        fun markAsUnChecked(checkedTextView: CheckedTextView) {
             checkedTextView.paintFlags = 0
             checkedTextView.isEnabled = true
             checkedTextView.setCheckMarkDrawable(R.drawable.check_box_outline_24dp)
+        }
+
+        fun removeFromDatabase(checkedTextView: CheckedTextView, recipe: Recipe, context: Context) {
             val db = AppDatabase.getInstance(context)
             object : AsyncTask<Void, Void, Int>() {
                 override fun doInBackground(vararg params: Void): Int {
                     if(db == null) { return -1}
-                    val ingredientDB = db.findByName(checkedTextView.text.toString())
+                    val ingredientDB = db.findByName(recipe.name + checkedTextView.text.toString())
                     db.delete(ingredientDB)
                     return 0
                 }

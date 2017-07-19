@@ -18,6 +18,10 @@ class Ingredient: Parcelable {
         this.ingredientName = ingredientName
     }
 
+    fun createListEntry():String {
+        return quantity.toString().replace(".0", "") + " " + measure + " of " + ingredientName
+    }
+
     constructor(source: Parcel) {
         this.quantity = source.readDouble()
         this.measure = source.readString()

@@ -1,7 +1,6 @@
 package com.asmat.rolando.bakingapp.fragments
 
 import android.content.Context
-import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -9,39 +8,30 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckedTextView
 
 import com.asmat.rolando.bakingapp.R
-import com.asmat.rolando.bakingapp.Utils.ArrayUtils
 import com.asmat.rolando.bakingapp.adapters.IngredientsAdapter
-import com.asmat.rolando.bakingapp.db.AppDatabase
-import com.asmat.rolando.bakingapp.db.IngredientDB
-import com.asmat.rolando.bakingapp.models.Ingredient
+import com.asmat.rolando.bakingapp.models.Recipe
 
 class IngredientsFragment : Fragment() {
-    private var mItems: Array<Ingredient>? = null
+    private var mRecipe: Recipe? = null
     private var mListener: OnIngredientsFragmentInteractionListener? = null
-    var mRecyclerView: RecyclerView? = null
+    private var mRecyclerView: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         if (arguments != null) {
-            mItems = arguments.getParcelableArray(ARG_INGREDIENTS) as Array<Ingredient>
+            mRecipe = arguments.getParcelable<Recipe>(ARG_RECIPE)
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_ingredients, container, false)
-
-        // Set the adapter
         val context = view.context
         mRecyclerView = view.findViewById(R.id.list) as RecyclerView
         mRecyclerView?.layoutManager = LinearLayoutManager(context)
-        val list = ArrayUtils.toArrayList(mItems!!)
-        mRecyclerView?.adapter = IngredientsAdapter(list, mListener)
-        (mRecyclerView?.adapter as IngredientsAdapter).mContext = activity
+        mRecyclerView?.adapter = IngredientsAdapter(mRecipe!!, activity, mListener)
         return view
     }
 
@@ -50,7 +40,7 @@ class IngredientsFragment : Fragment() {
         if (context is OnIngredientsFragmentInteractionListener) {
             mListener = context
         } else {
-            throw RuntimeException(context!!.toString() + " must implement OnListFragmentInteractionListener")
+            throw RuntimeException(context!!.toString() + " must implement OnIngredientsFragmentInteractionListener")
         }
     }
 
@@ -61,16 +51,15 @@ class IngredientsFragment : Fragment() {
 
     interface OnIngredientsFragmentInteractionListener {
         fun onIngredientTapped(item: IngredientsAdapter.ViewHolder)
-        fun onAddGroceries(view: View)
     }
 
     companion object {
-        private val ARG_INGREDIENTS = "arg-ingredients"
+        private val ARG_RECIPE = "arg_recipe"
 
-        fun newInstance(ingredients: Array<Ingredient>): IngredientsFragment {
+        fun newInstance(recipe: Recipe): IngredientsFragment {
             val fragment = IngredientsFragment()
             val args = Bundle()
-            args.putParcelableArray(ARG_INGREDIENTS, ingredients)
+            args.putParcelable(ARG_RECIPE, recipe)
             fragment.arguments = args
             return fragment
         }
