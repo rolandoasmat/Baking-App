@@ -1,5 +1,6 @@
 package com.asmat.rolando.bakingapp.adapters
 
+import android.content.Context
 import android.graphics.Paint
 import android.os.AsyncTask
 import android.support.v7.widget.RecyclerView
@@ -15,7 +16,7 @@ import com.asmat.rolando.bakingapp.fragments.IngredientsFragment.OnIngredientsFr
 import com.asmat.rolando.bakingapp.models.Ingredient
 
 class IngredientsAdapter(private val mValues: List<Ingredient>, private val mListener: OnIngredientsFragmentInteractionListener?) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
-    var shouldCheck = ArrayList<IngredientDB>()
+    var mContext: Context? = null
 
     override fun getItemCount(): Int {
         return mValues.size
@@ -35,10 +36,25 @@ class IngredientsAdapter(private val mValues: List<Ingredient>, private val mLis
         holder.mView.setOnClickListener {
             mListener?.onIngredientTapped(holder)
         }
-        val dbItem = IngredientDB(entry)
-        if(shouldCheck.contains(dbItem)) {
-            IngredientsAdapter.markAsChecked(holder.checkedTextView)
-        }
+        checkIngredientsFromDB(holder)
+    }
+
+    fun checkIngredientsFromDB(holder: ViewHolder) {
+        val db = AppDatabase.getInstance(mContext!!)
+        object : AsyncTask<Void, Void, List<IngredientDB>>() {
+            override fun doInBackground(vararg params: Void): List<IngredientDB> {
+                if(db == null) { return ArrayList() }
+                return db.getAllIngredients()
+            }
+
+            override fun onPostExecute(result: List<IngredientDB>) {
+                for(ingredient in result) {
+                    if(ingredient.ingredient == holder.checkedTextView.text) {
+                        markAsChecked(holder.checkedTextView)
+                    }
+                }
+            }
+        }.execute()
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {

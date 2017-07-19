@@ -41,7 +41,7 @@ class IngredientsFragment : Fragment() {
         mRecyclerView?.layoutManager = LinearLayoutManager(context)
         val list = ArrayUtils.toArrayList(mItems!!)
         mRecyclerView?.adapter = IngredientsAdapter(list, mListener)
-        fetchIngredientsFromDB()
+        (mRecyclerView?.adapter as IngredientsAdapter).mContext = activity
         return view
     }
 
@@ -52,24 +52,6 @@ class IngredientsFragment : Fragment() {
         } else {
             throw RuntimeException(context!!.toString() + " must implement OnListFragmentInteractionListener")
         }
-    }
-
-    // TODO use this fetch and check text views somewhere else?
-    fun fetchIngredientsFromDB() {
-        val db = AppDatabase.getInstance(context)
-        object : AsyncTask<Void, Void, List<IngredientDB>>() {
-            override fun doInBackground(vararg params: Void): List<IngredientDB> {
-                if(db == null) { return ArrayList() }
-                return db.getAllIngredients()
-            }
-
-            override fun onPostExecute(result: List<IngredientDB>) {
-                for(ingredient in result) {
-                    (mRecyclerView?.adapter as IngredientsAdapter).shouldCheck.add(ingredient)
-                    (mRecyclerView?.adapter as IngredientsAdapter).notifyDataSetChanged()
-                }
-            }
-        }.execute()
     }
 
     override fun onDetach() {
