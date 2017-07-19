@@ -68,5 +68,20 @@ class IngredientsAdapter(private val mValues: List<Ingredient>, private val mLis
             checkedTextView.isEnabled = false
             checkedTextView.setCheckMarkDrawable(R.drawable.check_24dp)
         }
+
+        fun markAsUnChecked(checkedTextView: CheckedTextView, context: Context) {
+            checkedTextView.paintFlags = 0
+            checkedTextView.isEnabled = true
+            checkedTextView.setCheckMarkDrawable(R.drawable.check_box_outline_24dp)
+            val db = AppDatabase.getInstance(context)
+            object : AsyncTask<Void, Void, Int>() {
+                override fun doInBackground(vararg params: Void): Int {
+                    if(db == null) { return -1}
+                    val ingredientDB = db.findByName(checkedTextView.text.toString())
+                    db.delete(ingredientDB)
+                    return 0
+                }
+            }.execute()
+        }
     }
 }

@@ -65,6 +65,7 @@ class RecipeDetailsActivity : AppCompatActivity(),
             IngredientsAdapter.markAsChecked(item.checkedTextView)
         } else {
             // Item was checked, so: remove from DB enable it
+            IngredientsAdapter.markAsUnChecked(item.checkedTextView, this)
         }
     }
 
