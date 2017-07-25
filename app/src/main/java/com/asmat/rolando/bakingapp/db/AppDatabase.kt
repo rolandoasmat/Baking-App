@@ -10,17 +10,17 @@ import android.content.Context
  * Created by rolandoasmat on 7/16/17.
  */
 
-@Database(entities = arrayOf(IngredientDB::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(ShoppingListIngredient::class), version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun ingredientsDao(): IngredientDao
+    abstract fun shoppingListDao(): ShoppingListDao
 
     companion object{
-        private val databaseName = "ingredients_db"
+        private val databaseName = "shopping_list_db"
+        var dbInstance: ShoppingListDao? = null
 
-        var dbInstance:IngredientDao? = null
-        fun getInstance(context: Context):IngredientDao?{
+        fun getInstance(context: Context): ShoppingListDao? {
             if(dbInstance == null)
-                dbInstance = Room.databaseBuilder(context, AppDatabase::class.java, databaseName).build().ingredientsDao()
+                dbInstance = Room.databaseBuilder(context, AppDatabase::class.java, databaseName).build().shoppingListDao()
             return dbInstance;
         }
     }

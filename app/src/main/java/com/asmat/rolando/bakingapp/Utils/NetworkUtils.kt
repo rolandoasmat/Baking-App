@@ -31,7 +31,6 @@ class NetworkUtils {
         }
 
         fun httpRequest(url: String, context: Context, onComplete: (String?) -> Unit) {
-
             // Instantiate the RequestQueue.
             val queue = Volley.newRequestQueue(context)
 
@@ -49,9 +48,6 @@ class NetworkUtils {
             // Add the request to the RequestQueue.
             queue.add(stringRequest)
             //queue.start()
-
-
-
         }
     }
 }

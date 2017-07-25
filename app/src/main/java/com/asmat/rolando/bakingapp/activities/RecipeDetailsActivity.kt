@@ -12,9 +12,6 @@ import com.asmat.rolando.bakingapp.adapters.RecipeDetailsViewPagerAdapter
 import com.asmat.rolando.bakingapp.fragments.IngredientsFragment
 import com.asmat.rolando.bakingapp.fragments.StepsFragment
 import com.asmat.rolando.bakingapp.models.Recipe
-import com.asmat.rolando.bakingapp.db.AppDatabase
-import com.asmat.rolando.bakingapp.db.IngredientDB
-import android.os.AsyncTask
 import com.asmat.rolando.bakingapp.adapters.IngredientsAdapter
 
 class RecipeDetailsActivity : AppCompatActivity(),
@@ -50,13 +47,13 @@ class RecipeDetailsActivity : AppCompatActivity(),
     // Fragment Callbacks
     override fun onIngredientTapped(item: IngredientsAdapter.ViewHolder) {
         if(item.checkedTextView.isEnabled){
-            // Item was not checked, so: insert to DB and disable it
-            IngredientsAdapter.markAsChecked(item)
-            IngredientsAdapter.addToDatabase(item, mRecipe!!,this)
+            // Item was not checked, so user is marking this ingredient as gotten. Mark as no longer needed
+            IngredientsAdapter.markAsChecked(item.checkedTextView)
+            IngredientsAdapter.addToDatabase(item.recipe!!.name, item.checkedTextView.text.toString(), false,this)
         } else {
             // Item was checked, so: remove from DB enable it
             IngredientsAdapter.markAsUnChecked(item.checkedTextView)
-            IngredientsAdapter.removeFromDatabase(item.checkedTextView, mRecipe!!, this)
+            IngredientsAdapter.addToDatabase(item.recipe!!.name, item.checkedTextView.text.toString(), true,this)
         }
     }
 

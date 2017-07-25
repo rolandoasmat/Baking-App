@@ -1,6 +1,7 @@
 package com.asmat.rolando.bakingapp.fragments
 
 import android.content.Context
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.ListFragment
 import android.view.LayoutInflater
@@ -13,6 +14,8 @@ import com.asmat.rolando.bakingapp.RecipesApiManager
 import com.asmat.rolando.bakingapp.Utils.ArrayUtils
 import com.asmat.rolando.bakingapp.activities.MainActivity
 import com.asmat.rolando.bakingapp.adapters.RecipesAdapter
+import com.asmat.rolando.bakingapp.db.AppDatabase
+import com.asmat.rolando.bakingapp.db.ShoppingListIngredient
 import com.asmat.rolando.bakingapp.models.Recipe
 
 /**
@@ -51,6 +54,7 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
 
     private fun fetchRecipes() {
         RecipesApiManager.fetchRecipes(activity){ recipes ->
+            updateDB(recipes)
             val recipesAdapter = listAdapter as RecipesAdapter
             if(recipes != null) {
                 val arrayList = ArrayUtils.toArrayList(recipes)
@@ -65,6 +69,45 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
                 recipesAdapter.clear()
             }
         }
+    }
+
+    private fun updateDB(recipes: Array<Recipe>?) {
+        if(recipes == null) { return }
+        val db = AppDatabase.getInstance(context)
+        object : AsyncTask<Void, Void, List<ShoppingListIngredient>>() {
+            override fun doInBackground(vararg params: Void): List<ShoppingListIngredient> {
+                if(db == null) { return ArrayList<ShoppingListIngredient>() }
+                return db.getAllIngredients()
+            }
+
+            override fun onPostExecute(result: List<ShoppingListIngredient>) {
+                if(result.isEmpty()) {
+                    populateDB(recipes)
+                } else {
+                    // Do nothing
+                    print("DB already populated")
+                }
+            }
+        }.execute()
+    }
+
+    private fun populateDB(recipes: Array<Recipe>?) {
+        if(recipes == null) { return }
+        val db = AppDatabase.getInstance(context)
+        object : AsyncTask<Void, Void, Int>() {
+            override fun doInBackground(vararg params: Void): Int {
+                if(db == null) { return -1 }
+                for(recipe in recipes){
+                    for(ingredient in recipe.ingredients){
+                        val shoppingListIngredient = ShoppingListIngredient(ingredient.createListEntry())
+                        shoppingListIngredient.recipe = recipe.name
+                        shoppingListIngredient.needed = true
+                        db?.insert(shoppingListIngredient)
+                    }
+                }
+                return 0
+            }
+        }.execute()
     }
 
     interface OnRecipeClickListener {

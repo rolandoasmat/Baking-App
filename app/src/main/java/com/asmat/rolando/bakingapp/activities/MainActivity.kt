@@ -12,7 +12,6 @@ import com.asmat.rolando.bakingapp.adapters.RecipeDetailsViewPagerAdapter
 import com.asmat.rolando.bakingapp.fragments.IngredientsFragment
 import com.asmat.rolando.bakingapp.fragments.RecipesListFragment
 import com.asmat.rolando.bakingapp.fragments.StepsFragment
-import com.asmat.rolando.bakingapp.models.Ingredient
 import com.asmat.rolando.bakingapp.models.Recipe
 
 class MainActivity : AppCompatActivity(), RecipesListFragment.OnRecipeClickListener,

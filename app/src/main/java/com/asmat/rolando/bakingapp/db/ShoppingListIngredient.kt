@@ -10,10 +10,16 @@ import android.arch.persistence.room.PrimaryKey
  * Created by rolandoasmat on 7/16/17.
  */
 
-@Entity(tableName = "ingredients")
-class IngredientDB(@ColumnInfo(name = "ingredient") var ingredient: String = "")
+@Entity(tableName = "shopping_list")
+class ShoppingListIngredient(@ColumnInfo(name = "ingredient") var ingredient: String = "")
 {
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
+    @ColumnInfo(name = "recipe")
+    var recipe: String = ""
+
+    @ColumnInfo(name = "needed")
+    var needed: Boolean = true
 }

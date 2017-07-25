@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.CheckedTextView
 import com.asmat.rolando.bakingapp.R
 import com.asmat.rolando.bakingapp.db.AppDatabase
-import com.asmat.rolando.bakingapp.db.IngredientDB
+import com.asmat.rolando.bakingapp.db.ShoppingListIngredient
 
 import com.asmat.rolando.bakingapp.fragments.IngredientsFragment.OnIngredientsFragmentInteractionListener
 import com.asmat.rolando.bakingapp.models.Ingredient
@@ -38,23 +38,25 @@ class IngredientsAdapter(private val mRecipe: Recipe,
         holder.mView.setOnClickListener {
             mListener?.onIngredientTapped(holder)
         }
-        checkIngredientsFromDB(holder)
+        checkIngredient(holder)
     }
 
-    fun checkIngredientsFromDB(holder: ViewHolder) {
+    fun checkIngredient(holder: ViewHolder) {
         val db = AppDatabase.getInstance(mContext)
-        object : AsyncTask<Void, Void, List<IngredientDB>>() {
-            override fun doInBackground(vararg params: Void): List<IngredientDB> {
-                if(db == null) { return ArrayList() }
-                return db.getAllIngredients()
+        object : AsyncTask<Void, Void, ShoppingListIngredient>() {
+            override fun doInBackground(vararg params: Void): ShoppingListIngredient {
+                if(db == null) {
+                    return ShoppingListIngredient()
+                } else {
+                    return db.findIngredient(holder.recipe!!.name, holder.ingredient!!.createListEntry())
+                }
             }
 
-            override fun onPostExecute(result: List<IngredientDB>) {
-                for(ingredient in result) {
-                    if(ingredient.ingredient == mRecipe.name + holder.checkedTextView.text) {
-                        markAsChecked(holder)
-                        return
-                    }
+            override fun onPostExecute(result: ShoppingListIngredient) {
+                if(result.needed) {
+                    markAsUnChecked(holder.checkedTextView)
+                } else {
+                    markAsChecked(holder.checkedTextView)
                 }
             }
         }.execute()
@@ -67,24 +69,10 @@ class IngredientsAdapter(private val mRecipe: Recipe,
     }
 
     companion object {
-        fun markAsChecked(viewHolder: IngredientsAdapter.ViewHolder) {
-            val checkedTextView = viewHolder.checkedTextView
+        fun markAsChecked(checkedTextView: CheckedTextView) {
             checkedTextView.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
             checkedTextView.isEnabled = false
             checkedTextView.setCheckMarkDrawable(R.drawable.check_24dp)
-        }
-
-        fun addToDatabase(viewHolder: IngredientsAdapter.ViewHolder, recipe: Recipe, context: Context) {
-            val ingredient = viewHolder.ingredient!!
-            val entry = recipe.name + ingredient.createListEntry()
-            val ingredientDB = IngredientDB(entry)
-            val db = AppDatabase.getInstance(context)
-            object : AsyncTask<Void, Void, Int>() {
-                override fun doInBackground(vararg params: Void): Int {
-                    db?.insert(ingredientDB)
-                    return 0
-                }
-            }.execute()
         }
 
         fun markAsUnChecked(checkedTextView: CheckedTextView) {
@@ -93,14 +81,21 @@ class IngredientsAdapter(private val mRecipe: Recipe,
             checkedTextView.setCheckMarkDrawable(R.drawable.check_box_outline_24dp)
         }
 
-        fun removeFromDatabase(checkedTextView: CheckedTextView, recipe: Recipe, context: Context) {
+        fun addToDatabase(recipeName: String, ingredientEntry: String, needed: Boolean, context: Context) {
             val db = AppDatabase.getInstance(context)
             object : AsyncTask<Void, Void, Int>() {
                 override fun doInBackground(vararg params: Void): Int {
-                    if(db == null) { return -1}
-                    val ingredientDB = db.findByName(recipe.name + checkedTextView.text.toString())
-                    db.delete(ingredientDB)
-                    return 0
+                    if(db == null) {
+                        return -1
+                    } else {
+                        val ingredientOld = db.findIngredient(recipeName, ingredientEntry)
+                        db.delete(ingredientOld)
+                        val shoppingListIngredient = ShoppingListIngredient(ingredientEntry)
+                        shoppingListIngredient.recipe = recipeName
+                        shoppingListIngredient.needed = needed
+                        db.insert(shoppingListIngredient)
+                        return 0
+                    }
                 }
             }.execute()
         }

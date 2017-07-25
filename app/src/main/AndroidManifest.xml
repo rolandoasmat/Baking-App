@@ -11,7 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.RecipeDetailsActivity"
             android:parentActivityName=".activities.MainActivity">
@@ -27,7 +25,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
         </activity>
-
         <activity
             android:name=".activities.RecipeStepsActivity"
             android:parentActivityName=".activities.RecipeDetailsActivity">
@@ -36,6 +33,21 @@
                 android:value=".activities.RecipeDetailsActivity" />
         </activity>
 
+        <receiver android:name=".widget.GroceriesListWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/groceries_list_widget_info" />
+        </receiver>
+
+        <activity android:name=".widget.GroceriesListWidgetConfigureActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
