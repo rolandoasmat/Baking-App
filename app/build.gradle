@@ -46,4 +46,6 @@ dependencies {
     compile 'com.google.android.exoplayer:exoplayer:r2.4.3'
     compile "android.arch.persistence.room:runtime:1.0.0-alpha3"
     kapt "android.arch.persistence.room:compiler:1.0.0-alpha3"
+    androidTestCompile 'com.android.support:support-annotations:25.4.0'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
 }
