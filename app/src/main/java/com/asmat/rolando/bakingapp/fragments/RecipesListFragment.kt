@@ -102,7 +102,7 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
                         val shoppingListIngredient = ShoppingListIngredient(ingredient.createListEntry())
                         shoppingListIngredient.recipe = recipe.name
                         shoppingListIngredient.needed = true
-                        db?.insert(shoppingListIngredient)
+                        db.insert(shoppingListIngredient)
                     }
                 }
                 return 0
