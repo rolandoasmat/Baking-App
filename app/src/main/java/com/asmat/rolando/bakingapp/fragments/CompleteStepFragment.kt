@@ -62,7 +62,8 @@ class CompleteStepFragment : Fragment(), ExoPlayer.EventListener {
             val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
             mPlayer = ExoPlayerFactory.newSimpleInstance(context, trackSelector)
             simpleExoPlayerView?.player = mPlayer!!
-            val dataSourceFactory = DefaultDataSourceFactory(context, Util.getUserAgent(context, "BakingApp"), bandwidthMeter)
+            val appName = resources.getString(R.string.app_name)
+            val dataSourceFactory = DefaultDataSourceFactory(context, Util.getUserAgent(context, appName), bandwidthMeter)
             val extractorsFactory = DefaultExtractorsFactory()
             val uri = Uri.parse(uriString)
             val videoSource = ExtractorMediaSource(uri, dataSourceFactory, extractorsFactory, null, null)
@@ -102,7 +103,7 @@ class CompleteStepFragment : Fragment(), ExoPlayer.EventListener {
     }
 
     fun setupMediaSession() {
-        mMediaSession = MediaSessionCompat(context, "CompleteStepFragment")
+        mMediaSession = MediaSessionCompat(context, TAG)
 
         val flags = MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS or MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS
         mMediaSession?.setFlags(flags)

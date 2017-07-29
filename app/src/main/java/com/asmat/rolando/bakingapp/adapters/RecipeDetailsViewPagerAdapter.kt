@@ -8,14 +8,14 @@ import android.view.ViewGroup
 import com.asmat.rolando.bakingapp.fragments.IngredientsFragment
 import com.asmat.rolando.bakingapp.fragments.StepsFragment
 import com.asmat.rolando.bakingapp.models.Recipe
-
+import android.content.Context
+import com.asmat.rolando.bakingapp.R
 
 /**
  * Created by rolandoasmat on 7/12/17.
  */
 
-
-class RecipeDetailsViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+class RecipeDetailsViewPagerAdapter(fm: FragmentManager, var mContext: Context) : FragmentStatePagerAdapter(fm) {
     var recipe: Recipe? = null
 
     override fun getCount(): Int {
@@ -32,8 +32,8 @@ class RecipeDetailsViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAda
 
     override fun getPageTitle(position: Int): CharSequence {
         when (position) {
-            0 -> return "Ingredients"
-            1 -> return "Steps"
+            0 -> return mContext.resources.getString(R.string.ingredients)
+            1 -> return mContext.resources.getString(R.string.steps)
             else -> throw RuntimeException("View pager should only be of size 2!")
         }
     }

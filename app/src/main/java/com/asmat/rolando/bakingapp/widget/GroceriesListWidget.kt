@@ -36,13 +36,14 @@ class GroceriesListWidget : AppWidgetProvider() {
     }
 
     companion object {
+        val INTENT_EXTRA_RECIPE_TITLE = "recipe_title"
 
         internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
             val recipeTitle = GroceriesListWidgetConfigureActivity.loadTitlePref(context, appWidgetId)
             // Construct the RemoteViews object
             val views = RemoteViews(context.packageName, R.layout.groceries_list_widget)
             val intent = Intent(context, GridWidgetService::class.java)
-            intent.putExtra("recipe_title", recipeTitle)
+            intent.putExtra(INTENT_EXTRA_RECIPE_TITLE, recipeTitle)
             views.setRemoteAdapter(R.id.widget_grid_view, intent)
             views.setTextViewText(R.id.widget_title_text_view, recipeTitle)
             // Instruct the widget manager to update the widget

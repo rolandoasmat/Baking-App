@@ -9,8 +9,7 @@
         android:id="@+id/step_simple_exo_player_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusable="true"
-        android:text="VIDEO HERE" />
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/complete_step_description_text_view"

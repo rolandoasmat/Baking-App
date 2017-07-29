@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), RecipesListFragment.OnRecipeClickListe
     var mSelectedRecipe: Recipe? = null
 
     companion object {
-        val ARG_RECIPE = "arg_recipe"
+        val INTENT_EXTRA_RECIPE = "intent_extra_recipe"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), RecipesListFragment.OnRecipeClickListe
         if(mIsDualPane) {
             mTabLayout = findViewById(R.id.tab_layout) as TabLayout
             mViewPager = findViewById(R.id.container) as ViewPager
-            mViewPagerAdapter = RecipeDetailsViewPagerAdapter(supportFragmentManager)
+            mViewPagerAdapter = RecipeDetailsViewPagerAdapter(supportFragmentManager, this)
 
             mTabLayout?.setupWithViewPager(mViewPager)
         }
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(), RecipesListFragment.OnRecipeClickListe
     override fun onRecipeSelected(recipe: Recipe) {
         if(!mIsDualPane) {
             val intent = Intent(this, RecipeDetailsActivity::class.java)
-            intent.putExtra(ARG_RECIPE, recipe)
+            intent.putExtra(INTENT_EXTRA_RECIPE, recipe)
             startActivity(intent)
         } else {
             mSelectedRecipe = recipe
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity(), RecipesListFragment.OnRecipeClickListe
 
     override fun onBeginRecipe(view: View) {
         val intent = Intent(this, RecipeStepsActivity::class.java)
-        intent.putExtra(MainActivity.ARG_RECIPE, mSelectedRecipe!!)
+        intent.putExtra(MainActivity.INTENT_EXTRA_RECIPE, mSelectedRecipe!!)
         startActivity(intent)
     }
 }

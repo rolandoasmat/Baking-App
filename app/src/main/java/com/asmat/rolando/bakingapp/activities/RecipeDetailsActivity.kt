@@ -25,9 +25,9 @@ class RecipeDetailsActivity : AppCompatActivity(),
         setContentView(R.layout.activity_recipe_details)
 
         val tabLayout = findViewById(R.id.tab_layout) as TabLayout
-        mRecipe = intent.getParcelableExtra<Recipe>(MainActivity.ARG_RECIPE)
+        mRecipe = intent.getParcelableExtra<Recipe>(MainActivity.INTENT_EXTRA_RECIPE)
         supportActionBar?.title = mRecipe?.name
-        mViewPagerAdapter = RecipeDetailsViewPagerAdapter(supportFragmentManager)
+        mViewPagerAdapter = RecipeDetailsViewPagerAdapter(supportFragmentManager, this)
         mViewPagerAdapter!!.recipe = mRecipe
         val viewPager = findViewById(R.id.container) as ViewPager
         viewPager.adapter = mViewPagerAdapter
@@ -59,7 +59,7 @@ class RecipeDetailsActivity : AppCompatActivity(),
 
     override fun onBeginRecipe(view: View) {
         val intent = Intent(this, RecipeStepsActivity::class.java)
-        intent.putExtra(MainActivity.ARG_RECIPE, mRecipe)
+        intent.putExtra(MainActivity.INTENT_EXTRA_RECIPE, mRecipe)
         startActivity(intent)
     }
 }

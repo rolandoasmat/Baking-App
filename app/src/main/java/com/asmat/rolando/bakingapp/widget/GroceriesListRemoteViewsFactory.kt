@@ -16,7 +16,7 @@ import com.asmat.rolando.bakingapp.db.ShoppingListIngredient
 class GridWidgetService : RemoteViewsService() {
     override fun onGetViewFactory(intent: Intent): RemoteViewsService.RemoteViewsFactory {
         // Get recipe name from intent
-        val recipeTitle = intent.getStringExtra("recipe_title")
+        val recipeTitle = intent.getStringExtra(GroceriesListWidget.INTENT_EXTRA_RECIPE_TITLE)
         return GroceriesListRemoteViewsFactory(this.applicationContext, recipeTitle)
     }
 }

@@ -17,9 +17,9 @@ class RecipeStepsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_recipe_steps)
 
         val tabLayout = findViewById(R.id.steps_tab_layout) as TabLayout
-        mRecipe = intent.getParcelableExtra<Recipe>(MainActivity.ARG_RECIPE)
+        mRecipe = intent.getParcelableExtra<Recipe>(MainActivity.INTENT_EXTRA_RECIPE)
         supportActionBar?.title = mRecipe?.name
-        val viewPagerAdapter = RecipeStepsViewPagerAdapter(supportFragmentManager)
+        val viewPagerAdapter = RecipeStepsViewPagerAdapter(supportFragmentManager, this)
         viewPagerAdapter.recipe = mRecipe
         val viewPager = findViewById(R.id.steps_view_pager) as ViewPager
         viewPager.adapter = viewPagerAdapter

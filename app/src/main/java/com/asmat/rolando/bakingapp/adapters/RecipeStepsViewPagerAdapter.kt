@@ -1,8 +1,10 @@
 package com.asmat.rolando.bakingapp.adapters
 
+import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import com.asmat.rolando.bakingapp.R
 import com.asmat.rolando.bakingapp.fragments.CompleteStepFragment
 import com.asmat.rolando.bakingapp.models.Recipe
 
@@ -10,7 +12,7 @@ import com.asmat.rolando.bakingapp.models.Recipe
  * Created by rolandoasmat on 7/14/17.
  */
 // https://github.com/google/ExoPlayer/issues/591
-class RecipeStepsViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+class RecipeStepsViewPagerAdapter(fm: FragmentManager, var mContext: Context) : FragmentStatePagerAdapter(fm) {
     var recipe: Recipe? = null
 
     override fun getCount(): Int {
@@ -29,7 +31,7 @@ class RecipeStepsViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapt
     override fun getPageTitle(position: Int): CharSequence {
         val id =  recipe!!.steps[position].id
         if(id == 0) {
-            return "Intro"
+            return mContext.resources.getString(R.string.intro)
         } else {
             return id.toString()
         }
