@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#09C"
+    android:background="#FFECB3"
     android:padding="@dimen/widget_margin">
 
     <TextView
@@ -10,18 +10,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:layout_margin="8dp"
-        android:background="#09C"
+        android:background="#C62828"
         android:contentDescription="@string/appwidget_text"
         android:text="@string/appwidget_text"
         android:textColor="#ffffff"
         android:textSize="24sp"
         android:textStyle="bold|italic" />
 
-    <ListView
-        android:id="@+id/widget_list_view"
+    <GridView
+        android:id="@+id/widget_grid_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="8dp"
+        android:numColumns="1">
+    </GridView>
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.widget.RemoteViews
 import com.asmat.rolando.bakingapp.R
+import android.content.Intent
 
 /**
  * Implementation of App Widget functionality.
@@ -36,14 +37,14 @@ class GroceriesListWidget : AppWidgetProvider() {
 
     companion object {
 
-        internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager,
-                                     appWidgetId: Int) {
-
-            val widgetText = GroceriesListWidgetConfigureActivity.loadTitlePref(context, appWidgetId)
+        internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
+            val recipeTitle = GroceriesListWidgetConfigureActivity.loadTitlePref(context, appWidgetId)
             // Construct the RemoteViews object
             val views = RemoteViews(context.packageName, R.layout.groceries_list_widget)
-            views.setTextViewText(R.id.widget_title_text_view, widgetText)
-
+            val intent = Intent(context, GridWidgetService::class.java)
+            intent.putExtra("recipe_title", recipeTitle)
+            views.setRemoteAdapter(R.id.widget_grid_view, intent)
+            views.setTextViewText(R.id.widget_title_text_view, recipeTitle)
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }

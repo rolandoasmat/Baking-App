@@ -14,8 +14,6 @@ import com.asmat.rolando.bakingapp.models.Recipe
  * The configuration screen for the [GroceriesListWidget] AppWidget.
  */
 class GroceriesListWidgetConfigureActivity : AppCompatActivity(), RecipesListFragment.OnRecipeClickListener {
-
-
     internal var mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
 
     public override fun onCreate(icicle: Bundle?) {
@@ -26,11 +24,8 @@ class GroceriesListWidgetConfigureActivity : AppCompatActivity(), RecipesListFra
         setResult(Activity.RESULT_CANCELED)
 
         setContentView(R.layout.groceries_list_widget_configure)
-//        mAppWidgetText = findViewById(R.id.appwidget_text) as EditText
-//        findViewById(R.id.add_button).setOnClickListener(mOnClickListener)
 
         // Find the widget id from the intent.
-        val intent = intent
         val extras = intent.extras
         if (extras != null) {
             mAppWidgetId = extras.getInt(
@@ -62,7 +57,6 @@ class GroceriesListWidgetConfigureActivity : AppCompatActivity(), RecipesListFra
     }
 
     companion object {
-
         private val PREFS_NAME = "com.asmat.rolando.bakingapp.widget.GroceriesListWidget"
         private val PREF_PREFIX_KEY = "appwidget_"
 
@@ -92,4 +86,3 @@ class GroceriesListWidgetConfigureActivity : AppCompatActivity(), RecipesListFra
         }
     }
 }
-
