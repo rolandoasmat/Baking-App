@@ -23,14 +23,14 @@ public class RecipeStepsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_steps);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.steps_tab_layout);
+        TabLayout tabLayout = findViewById(R.id.steps_tab_layout);
         mRecipe = getIntent().getParcelableExtra(MainActivity.INTENT_EXTRA_RECIPE);
         getSupportActionBar().setTitle(mRecipe.getName());
 
         RecipeStepsViewPagerAdapter viewPagerAdapter = new RecipeStepsViewPagerAdapter(getSupportFragmentManager(),this);
         viewPagerAdapter.setRecipe(mRecipe);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.steps_view_pager);
+        ViewPager viewPager = findViewById(R.id.steps_view_pager);
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }

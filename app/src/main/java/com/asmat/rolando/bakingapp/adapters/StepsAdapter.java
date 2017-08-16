@@ -51,7 +51,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
 
         public ViewHolder( View mView) {
             super(mView);
-            shortDescriptionTextView = (TextView) mView.findViewById(R.id.text_view_step_short_description);
+            shortDescriptionTextView = mView.findViewById(R.id.text_view_step_short_description);
         }
     }
 }

@@ -28,8 +28,8 @@ public class RecipesAdapter extends ArrayAdapter {
             mutableConvertView = convertView;
         }
         Recipe recipe = (Recipe) this.getItem(position);
-        ImageView imageView = (ImageView) mutableConvertView.findViewById(R.id.recipe_image_view);
-        TextView textView = (TextView) mutableConvertView.findViewById(R.id.recipe_name_text_view);
+        ImageView imageView = mutableConvertView.findViewById(R.id.recipe_image_view);
+        TextView textView = mutableConvertView.findViewById(R.id.recipe_name_text_view);
         if(!recipe.getImage().equals("")) {
             Picasso.with(getContext()).load(recipe.getImage()).into(imageView);
         }

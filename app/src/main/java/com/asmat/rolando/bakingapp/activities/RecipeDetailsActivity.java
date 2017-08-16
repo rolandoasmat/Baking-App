@@ -30,12 +30,12 @@ public class RecipeDetailsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
         mRecipe = getIntent().getParcelableExtra(MainActivity.INTENT_EXTRA_RECIPE);
         getSupportActionBar().setTitle(mRecipe.getName());
         mViewPagerAdapter = new RecipeDetailsViewPagerAdapter(getSupportFragmentManager(), this);
         mViewPagerAdapter.setRecipe(mRecipe);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.container);
+        ViewPager viewPager = findViewById(R.id.container);
         viewPager.setAdapter(mViewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }

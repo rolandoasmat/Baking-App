@@ -120,7 +120,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            checkedTextView = (CheckedTextView) mView.findViewById(R.id.checked_text_view_ingredient);
+            checkedTextView = mView.findViewById(R.id.checked_text_view_ingredient);
         }
     }
 

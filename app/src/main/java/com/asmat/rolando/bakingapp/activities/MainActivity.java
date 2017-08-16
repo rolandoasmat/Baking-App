@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity
         View view = findViewById(R.id.activity_recipe_details_layout);
         mIsDualPane = view != null && view.getVisibility() == View.VISIBLE;
         if(mIsDualPane) {
-            mTabLayout = (TabLayout) this.findViewById(R.id.tab_layout);
-            mViewPager = (ViewPager) this.findViewById(R.id.container);
+            mTabLayout = this.findViewById(R.id.tab_layout);
+            mViewPager = this.findViewById(R.id.container);
             mViewPagerAdapter = new RecipeDetailsViewPagerAdapter(getSupportFragmentManager(), this);
             if(mTabLayout != null) {
                 mTabLayout.setupWithViewPager(mViewPager);
