@@ -24,7 +24,7 @@ public class RecipeStepsViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return CompleteStepFragment.Companion.newInstance(recipe, position);
+        return CompleteStepFragment.newInstance(recipe, position);
     }
 
     @Override
