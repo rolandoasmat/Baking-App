@@ -30,7 +30,7 @@ public class Step implements Parcelable {
         this.thumbnailURL = source.readString();
     }
     
-    public static final Creator CREATOR = (Creator)(new Creator() {
+    public static final Creator<Step> CREATOR = new Creator<Step>() {
 
         @Override
         public Step createFromParcel( Parcel source) {
@@ -41,7 +41,7 @@ public class Step implements Parcelable {
         public Step[] newArray(int size) {
             return new Step[size];
         }
-    });
+    };
 
     public final int getId() {
         return this.id;

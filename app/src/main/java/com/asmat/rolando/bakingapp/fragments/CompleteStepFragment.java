@@ -109,8 +109,12 @@ public class CompleteStepFragment extends Fragment implements ExoPlayer.EventLis
     @Override
     public void onPause() {
         super.onPause();
-        mPlayer.setPlayWhenReady(false);
-        mMediaSession.setActive(false);
+        if(mPlayer != null) {
+            mPlayer.setPlayWhenReady(false);
+        }
+        if(mMediaSession != null) {
+            mMediaSession.setActive(false);
+        }
     }
 
     @Override
@@ -124,8 +128,12 @@ public class CompleteStepFragment extends Fragment implements ExoPlayer.EventLis
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPlayer.release();
-        mMediaSession.release();
+        if(mPlayer != null) {
+            mPlayer.release();
+        }
+        if(mMediaSession != null) {
+            mMediaSession.release();
+        }
     }
 
     public final void setupMediaSession() {
@@ -196,13 +204,18 @@ public class CompleteStepFragment extends Fragment implements ExoPlayer.EventLis
         @Override
         public void onPlay() {
             super.onPlay();
-            CompleteStepFragment.this.mPlayer.setPlayWhenReady(true);
+            if(CompleteStepFragment.this.mPlayer != null) {
+                CompleteStepFragment.this.mPlayer.setPlayWhenReady(true);
+            }
+
         }
 
         @Override
         public void onPause() {
             super.onPause();
-            CompleteStepFragment.this.mPlayer.setPlayWhenReady(false);
+            if(CompleteStepFragment.this.mPlayer != null) {
+                CompleteStepFragment.this.mPlayer.setPlayWhenReady(false);
+            }
         }
 
         @Override

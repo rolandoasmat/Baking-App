@@ -40,7 +40,7 @@ public class RecipeDetailsViewPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return IngredientsFragment.newInstance(recipe);
             case 1:
-                return StepsFragment.Companion.newInstance(recipe.getSteps());
+                return StepsFragment.newInstance(recipe.getSteps());
             default:
                 throw new RuntimeException("View pager should only be of size 2!");
         }
