@@ -38,7 +38,7 @@ class GroceriesListRemoteViewsFactory: RemoteViewsService.RemoteViewsFactory {
         // populate mRecipe: Recipe? somehow
         if(mContext != null) {
             val db = AppDatabase.getInstance(mContext!!)
-            mIngredients = db?.getAllIngredientsOfRecipe(mRecipeTitle)
+            mIngredients = db?.getAllIngredientsOfRecipe(mRecipeTitle) as List<ShoppingListIngredient>
         }
     }
 
