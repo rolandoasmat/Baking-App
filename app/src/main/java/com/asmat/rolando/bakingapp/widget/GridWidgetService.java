@@ -7,7 +7,7 @@ import android.widget.RemoteViewsService;
  * Created by rolandoasmat on 8/17/17.
  */
 
-class GridWidgetService extends RemoteViewsService {
+public class GridWidgetService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {

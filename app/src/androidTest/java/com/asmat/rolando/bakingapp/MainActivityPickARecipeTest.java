@@ -9,7 +9,6 @@ import android.support.test.rule.ActivityTestRule;
 import com.asmat.rolando.bakingapp.activities.MainActivity;
 
 import org.hamcrest.Matchers;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -19,11 +18,10 @@ import org.junit.Test;
  */
 
 public class MainActivityPickARecipeTest {
-    @NotNull
+
     private final ActivityTestRule mActivityTestRule = new ActivityTestRule(MainActivity.class);
 
     @Rule
-    @NotNull
     public final ActivityTestRule getMActivityTestRule() {
         return this.mActivityTestRule;
     }
