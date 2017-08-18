@@ -103,12 +103,3 @@ public class GroceriesListRemoteViewsFactory implements RemoteViewsService.Remot
         this.mRecipeTitle = title;
     }
 }
-
-class GridWidgetService extends RemoteViewsService {
-
-    @Override
-    public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        String recipeTitle = intent.getStringExtra(GroceriesListWidget.INTENT_EXTRA_RECIPE_TITLE);
-        return (new GroceriesListRemoteViewsFactory(getApplicationContext(), recipeTitle));
-    }
-}
