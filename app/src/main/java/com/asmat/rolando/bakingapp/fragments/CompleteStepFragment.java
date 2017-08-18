@@ -126,6 +126,17 @@ public class CompleteStepFragment extends Fragment implements ExoPlayer.EventLis
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        if(mPlayer != null) {
+            mPlayer.release();
+        }
+        if(mMediaSession != null) {
+            mMediaSession.release();
+        }
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if(mPlayer != null) {
