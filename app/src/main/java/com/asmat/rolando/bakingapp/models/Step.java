@@ -59,6 +59,10 @@ public class Step implements Parcelable {
         return this.videoURL;
     }
 
+    public final String getThumbnailURL() {
+        return this.thumbnailURL;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         if(dest != null) {
             dest.writeInt(this.id);

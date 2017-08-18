@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asmat.rolando.bakingapp.R;
@@ -32,6 +33,7 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.TransferListener;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by rolandoasmat on 8/15/17.
@@ -63,6 +65,11 @@ public class CompleteStepFragment extends Fragment implements ExoPlayer.EventLis
         descriptionTextView.setMovementMethod(new ScrollingMovementMethod());
         String stepDescription = mRecipe.getSteps()[mPosition].getDescription();
         descriptionTextView.setText(stepDescription);
+        ImageView thumbnail = view.findViewById(R.id.complete_step_image_thumbnail_image_view);
+        String imageUrl = mRecipe.getSteps()[mPosition].getThumbnailURL();
+        if(!imageUrl.equals("")) {
+            Picasso.with(getContext()).load(imageUrl).into(thumbnail);
+        }
         simpleExoPlayerView = (SimpleExoPlayerView) view.findViewById(R.id.step_simple_exo_player_view);
         String uriString = mRecipe.getSteps()[mPosition].getVideoURL();
 
