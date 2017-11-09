@@ -70,7 +70,9 @@ public class RecipesListFragment extends ListFragment implements AdapterView.OnI
 
             @Override
             public void onComplete(ArrayList<Recipe> response) {
-
+                if(response == null) {
+                    return;
+                }
                 Recipe[] array = new Recipe[response.size()];
                 for(int i = 0; i < response.size(); i++) {
                     array[i] = response.get(i);
