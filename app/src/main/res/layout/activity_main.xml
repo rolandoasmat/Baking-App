@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.asmat.rolando.bakingapp.activities.MainActivity">
+    tools:context="com.asmat.rolando.rocoton.activities.MainActivity">
 
     <fragment
         android:id="@+id/recipes_list_fragment"
-        android:name="com.asmat.rolando.bakingapp.fragments.RecipesListFragment"
+        android:name="com.asmat.rolando.rocoton.fragments.RecipesListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

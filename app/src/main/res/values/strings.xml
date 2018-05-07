@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Baking App</string>
+    <string name="app_name">Rocotón</string>
     <string name="fetching_data">Fetching Data...</string>
     <string name="appwidget_text">Shopping List</string>
     <string name="add_widget">Add widget</string>
