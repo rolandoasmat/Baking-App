@@ -20,18 +20,19 @@ class IngredientsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val arguments = this.arguments
         if (arguments != null) {
-            mRecipe = arguments.getParcelable<Recipe>(ARG_RECIPE)
+            mRecipe = arguments.getParcelable(ARG_RECIPE)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_ingredients, container, false)
+        val view = inflater.inflate(R.layout.fragment_ingredients, container, false)
         val context = view.context
         mRecyclerView = view.findViewById(R.id.list) as RecyclerView
         mRecyclerView?.layoutManager = LinearLayoutManager(context)
-        mRecyclerView?.adapter = IngredientsAdapter(mRecipe!!, activity, mListener)
+        mRecyclerView?.adapter = IngredientsAdapter(mRecipe!!, context, mListener)
         return view
     }
 

@@ -21,14 +21,15 @@ class StepsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val arguments = arguments
         if (arguments != null) {
             mItems = arguments.getParcelableArray(ARG_STEPS) as Array<Step>
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_steps, container, false)
+        val view = inflater.inflate(R.layout.fragment_steps, container, false)
 
         val context = view.context
         val recyclerView = view.findViewById(R.id.list) as RecyclerView

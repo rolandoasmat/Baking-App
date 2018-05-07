@@ -39,15 +39,11 @@ class RecipeDetailsViewPagerAdapter(fm: FragmentManager, var mContext: Context) 
     }
 
     // https://stackoverflow.com/questions/7263291/viewpager-pageradapter-not-updating-the-view
-    override fun getItemPosition(`object`: Any?): Int {
+    override fun getItemPosition(`object`: Any): Int {
         return PagerAdapter.POSITION_NONE
     }
 
-    override fun instantiateItem(container: ViewGroup?, position: Int): Any {
-        return super.instantiateItem(container, position)
-    }
-
-    override fun destroyItem(container: ViewGroup?, position: Int, `object`: Any?) {
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         super.destroyItem(container, position, `object`)
     }
 }

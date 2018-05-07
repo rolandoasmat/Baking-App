@@ -30,11 +30,11 @@ class MainActivity : AppCompatActivity(), RecipesListFragment.OnRecipeClickListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val view = findViewById(R.id.activity_recipe_details_layout)
+        val view = findViewById<View>(R.id.activity_recipe_details_layout)
         mIsDualPane = view != null && view.visibility == View.VISIBLE
         if(mIsDualPane) {
-            mTabLayout = findViewById(R.id.tab_layout) as TabLayout
-            mViewPager = findViewById(R.id.container) as ViewPager
+            mTabLayout = findViewById(R.id.tab_layout)
+            mViewPager = findViewById(R.id.container)
             mViewPagerAdapter = RecipeDetailsViewPagerAdapter(supportFragmentManager, this)
 
             mTabLayout?.setupWithViewPager(mViewPager)

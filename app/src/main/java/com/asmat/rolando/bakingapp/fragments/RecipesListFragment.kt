@@ -25,8 +25,8 @@ import com.asmat.rolando.bakingapp.models.Recipe
 class RecipesListFragment: ListFragment(), OnItemClickListener {
     var callback: OnRecipeClickListener? = null
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_recipes, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_recipes, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -53,14 +53,15 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
     }
 
     private fun fetchRecipes() {
-        RecipesApiManager.fetchRecipes(activity){ recipes ->
+        val context = context ?: return
+        RecipesApiManager.fetchRecipes(context){ recipes ->
             updateDB(recipes)
             val recipesAdapter = listAdapter as RecipesAdapter
             if(recipes != null) {
                 val arrayList = ArrayUtils.toArrayList(recipes)
                 recipesAdapter.addAll(arrayList)
                 if(context is MainActivity) {
-                    val main = context as MainActivity
+                    val main = context
                     if(main.mIsDualPane) {
                         callback?.onRecipeSelected(arrayList[0])
                     }
@@ -73,6 +74,7 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
 
     private fun updateDB(recipes: Array<Recipe>?) {
         if(recipes == null) { return }
+        val context = context ?: return
         val db = AppDatabase.getInstance(context)
         object : AsyncTask<Void, Void, List<ShoppingListIngredient>>() {
             override fun doInBackground(vararg params: Void): List<ShoppingListIngredient> {
@@ -93,6 +95,7 @@ class RecipesListFragment: ListFragment(), OnItemClickListener {
 
     private fun populateDB(recipes: Array<Recipe>?) {
         if(recipes == null) { return }
+        val context = context ?: return
         val db = AppDatabase.getInstance(context)
         object : AsyncTask<Void, Void, Int>() {
             override fun doInBackground(vararg params: Void): Int {

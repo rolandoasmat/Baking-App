@@ -11,7 +11,7 @@ import android.content.Context
  */
 
 @Database(entities = arrayOf(ShoppingListIngredient::class), version = 1, exportSchema = false)
-abstract class AppDatabase : RoomDatabase() {
+public abstract class AppDatabase : RoomDatabase() {
     abstract fun shoppingListDao(): ShoppingListDao
 
     companion object{
@@ -20,8 +20,9 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getInstance(context: Context): ShoppingListDao? {
             if(dbInstance == null)
+                // https://stackoverflow.com/questions/46665621/android-room-persistent-appdatabase-impl-does-not-exist
                 dbInstance = Room.databaseBuilder(context, AppDatabase::class.java, databaseName).build().shoppingListDao()
-            return dbInstance;
+            return dbInstance
         }
     }
 }

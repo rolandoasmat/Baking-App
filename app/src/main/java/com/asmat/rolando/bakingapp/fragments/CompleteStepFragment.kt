@@ -36,15 +36,16 @@ class CompleteStepFragment : Fragment(), ExoPlayer.EventListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val arguments = this.arguments
         if (arguments != null) {
             mRecipe = arguments.getParcelable(ARG_RECIPE)
             mPosition = arguments.getInt(ARG_POSITION)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_complete_step, container, false)
+        val view = inflater.inflate(R.layout.fragment_complete_step, container, false)
 
         val descriptionTextView = view.findViewById(R.id.complete_step_description_text_view) as TextView
         descriptionTextView.movementMethod = ScrollingMovementMethod()
@@ -53,7 +54,7 @@ class CompleteStepFragment : Fragment(), ExoPlayer.EventListener {
 
         simpleExoPlayerView = view.findViewById(R.id.step_simple_exo_player_view) as SimpleExoPlayerView
         val uriString = mRecipe!!.steps[mPosition!!].videoURL
-        if(uriString.equals("")) {
+        if(uriString == "") {
             simpleExoPlayerView?.visibility = View.GONE
             container?.removeView(simpleExoPlayerView)
         } else {
