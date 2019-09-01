@@ -3,11 +3,11 @@ package com.asmat.rolando.bakingapp.adapters
 import android.content.Context
 import android.graphics.Paint
 import android.os.AsyncTask
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckedTextView
+import androidx.recyclerview.widget.RecyclerView
 import com.asmat.rolando.bakingapp.R
 import com.asmat.rolando.bakingapp.db.AppDatabase
 import com.asmat.rolando.bakingapp.db.ShoppingListIngredient

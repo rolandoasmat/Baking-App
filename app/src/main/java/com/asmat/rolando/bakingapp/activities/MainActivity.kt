@@ -1,11 +1,10 @@
 package com.asmat.rolando.bakingapp.activities
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.view.ViewPager
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
 import com.asmat.rolando.bakingapp.R
 import com.asmat.rolando.bakingapp.adapters.IngredientsAdapter
 import com.asmat.rolando.bakingapp.adapters.RecipeDetailsViewPagerAdapter
@@ -13,7 +12,7 @@ import com.asmat.rolando.bakingapp.fragments.IngredientsFragment
 import com.asmat.rolando.bakingapp.fragments.RecipesListFragment
 import com.asmat.rolando.bakingapp.fragments.StepsFragment
 import com.asmat.rolando.bakingapp.models.Recipe
-import org.json.JSONObject
+import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity(), RecipesListFragment.OnRecipeClickListener,
         IngredientsFragment.OnIngredientsFragmentInteractionListener, StepsFragment.OnStepsFragmentInteractionListener {

@@ -2,7 +2,6 @@ package com.asmat.rolando.bakingapp.fragments
 
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
@@ -12,21 +11,23 @@ import android.widget.TextView
 
 import com.asmat.rolando.bakingapp.R
 import com.asmat.rolando.bakingapp.models.Recipe
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
-import com.google.android.exoplayer2.source.ExtractorMediaSource
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.google.android.exoplayer2.util.Util
+
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
+import androidx.fragment.app.Fragment
 import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
+import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.TrackGroupArray
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.util.Util
 
-class CompleteStepFragment : Fragment(), ExoPlayer.EventListener {
+class CompleteStepFragment : Fragment(), Player.EventListener {
     private var mRecipe: Recipe? = null
     private var mPosition: Int? = null
     private var simpleExoPlayerView: SimpleExoPlayerView? = null
@@ -156,10 +157,6 @@ class CompleteStepFragment : Fragment(), ExoPlayer.EventListener {
     override fun onPlayerError(error: ExoPlaybackException?) { }
 
     override fun onLoadingChanged(isLoading: Boolean) { }
-
-    override fun onPositionDiscontinuity() { }
-
-    override fun onTimelineChanged(timeline: Timeline?, manifest: Any?) { }
 
     // MediaSession Callbacks. This is how external clients can interact with the player.
 

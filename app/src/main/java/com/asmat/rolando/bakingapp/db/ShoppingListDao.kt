@@ -1,6 +1,6 @@
 package com.asmat.rolando.bakingapp.db
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 
 /**

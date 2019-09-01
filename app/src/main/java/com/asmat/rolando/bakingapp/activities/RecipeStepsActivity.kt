@@ -1,13 +1,13 @@
 package com.asmat.rolando.bakingapp.activities
 
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.view.ViewPager
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
 import com.asmat.rolando.bakingapp.R
 import com.asmat.rolando.bakingapp.adapters.RecipeStepsViewPagerAdapter
 import com.asmat.rolando.bakingapp.models.Recipe
+import com.google.android.material.tabs.TabLayout
 
 class RecipeStepsActivity : AppCompatActivity() {
     var mRecipe: Recipe? = null
