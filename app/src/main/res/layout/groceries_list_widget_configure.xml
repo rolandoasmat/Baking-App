@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/recipes_list_fragment"
-        android:name="com.asmat.rolando.rocoton.fragments.RecipesListFragment"
+        android:name="com.asmat.rolando.bakingapp.fragments.RecipesListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

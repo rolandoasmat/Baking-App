@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.asmat.rolando.rocoton.activities.RecipeStepsActivity">
+    tools:context="com.asmat.rolando.bakingapp.activities.RecipeStepsActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/steps_view_pager"

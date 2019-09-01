@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.asmat.rolando.rocoton.activities.RecipeDetailsActivity"
+    tools:context="com.asmat.rolando.bakingapp.activities.RecipeDetailsActivity"
     android:id="@+id/activity_recipe_details_layout">
 
     <ImageView

@@ -7,11 +7,11 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
-        android:name="com.asmat.rolando.rocoton.fragments.IngredientsFragment"
+        android:name="com.asmat.rolando.bakingapp.fragments.IngredientsFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tools:context="com.asmat.rolando.rocoton.fragments.IngredientsFragment"
+        tools:context="com.asmat.rolando.bakingapp.fragments.IngredientsFragment"
         tools:listitem="@layout/fragment_ingredients_list_item"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
